@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Context>
+	<Resource name="jdbc/pontoeletronico" auth="Container" type="javax.sql.DataSource"
+		username="root" password="root" url="jdbc:postgresql://172.18.223.27:5432/pontoeletronico"
+		driverClassName="org.postgresql.Driver" initialSize="1" maxActive="2"
+		maxIdle="2" minIdle="0" maxWait="2" validationQuery="SELECT 1"
+		removeAbandoned="true" removeAbandonedTimeout="20" logAbandoned="true" />
+</Context>
