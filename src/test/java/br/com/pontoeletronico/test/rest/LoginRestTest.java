@@ -8,16 +8,14 @@ import org.springframework.http.ResponseEntity;
 import br.com.pontoeletronico.dominio.Usuario;
 import br.com.pontoeletronico.test.RestTest;
 
-public class UsuarioRestTest extends RestTest {
+public class LoginRestTest extends RestTest {
 
 	@Test
 	public void realizarLoginSucesso() {
 		Usuario u = new Usuario();
 		u.setMatricula("root");
 		u.setSenha("123456");
-
-		ResponseEntity<String> resposta = rest.postForEntity("http://localhost:8080/rest/usuario/cadastrar", u,
-				String.class);
+		ResponseEntity<String> resposta = rest.postForEntity("http://localhost:8080/rest/login", u, String.class);
 		Assert.assertEquals(HttpStatus.OK, resposta.getStatusCode());
 		Assert.assertEquals("OK", resposta.getBody());
 	}
@@ -27,7 +25,7 @@ public class UsuarioRestTest extends RestTest {
 		Usuario u = new Usuario();
 		u.setMatricula("toor");
 		u.setSenha("654321");
-		rest.postForEntity("http://localhost:8080/rest/usuario/cadastrar", u, String.class);
+		rest.postForEntity("http://localhost:8080/rest/login", u, String.class);
 	}
 
 }

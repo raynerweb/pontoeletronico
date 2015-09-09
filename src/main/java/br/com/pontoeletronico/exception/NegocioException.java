@@ -12,8 +12,8 @@ public class NegocioException extends WebApplicationException {
 	private static final long serialVersionUID = 5562204433408374183L;
 	private static Map<String, String> errors;
 
-	public NegocioException(Map<String, String> erros) {
-		super(Response.status(Response.Status.UNAUTHORIZED).entity(erros).type(MediaType.APPLICATION_JSON).build());
+	public NegocioException(Map<String, String> errors) {
+		super(Response.status(Response.Status.UNAUTHORIZED).entity(errors).type(MediaType.APPLICATION_JSON).build());
 	}
 
 	public NegocioException(String error) {
