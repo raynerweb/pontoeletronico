@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import br.com.pontoeletronico.dominio.Usuario;
 
 @Repository
-public interface UsuarioRepositorio extends CrudRepository<Usuario, Long> {
+public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
 	Usuario findByMatriculaAndSenha(String matricula, String senha);
 }

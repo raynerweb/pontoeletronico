@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 public class Usuario {
 
 	@Id
-	@SequenceGenerator(name = "usuario_id_seq", sequenceName = "usuario_id_seq")
+	@SequenceGenerator(name = "usuario_id_seq", sequenceName = "usuario_id_seq", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "usuario_id_seq")
 	private Long id;
 
