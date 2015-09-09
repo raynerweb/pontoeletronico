@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 public class Usuario {
 
 	@Id
-	@SequenceGenerator(name = "usuario_id_seq", sequenceName = "usuario_id_seq", allocationSize=1)
+	@SequenceGenerator(name = "usuario_id_seq", sequenceName = "usuario_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "usuario_id_seq")
 	private Long id;
 
@@ -26,11 +26,14 @@ public class Usuario {
 	@Column(nullable = false)
 	private String matricula;
 
-	@Column(nullable = false)
+	@Column
 	private String senha;
 
 	@Enumerated(EnumType.STRING)
 	private Perfil perfil;
+
+	@Enumerated(EnumType.STRING)
+	private Status status;
 
 	public Long getId() {
 		return id;
@@ -70,6 +73,14 @@ public class Usuario {
 
 	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 }

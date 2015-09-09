@@ -1,13 +1,16 @@
 package br.com.pontoeletronico.test.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.pontoeletronico.dominio.Perfil;
+import br.com.pontoeletronico.dominio.Status;
 import br.com.pontoeletronico.dominio.Usuario;
 import br.com.pontoeletronico.exception.NegocioException;
+import br.com.pontoeletronico.repository.UsuarioRepository;
 import br.com.pontoeletronico.service.UsuarioService;
 import br.com.pontoeletronico.test.AbstractTest;
 
@@ -15,6 +18,9 @@ public class UsuarioServiceTest extends AbstractTest {
 
 	@Autowired
 	private UsuarioService usuarioService;
+
+	@Autowired
+	private UsuarioRepository repositorio;
 
 	private Usuario usuario;
 
@@ -25,12 +31,26 @@ public class UsuarioServiceTest extends AbstractTest {
 		usuario.setNome("Fulano");
 		usuario.setPerfil(Perfil.OPERADOR);
 		usuario.setSenha("112233");
+		usuario.setStatus(Status.INATIVO);
 	}
 
 	@Test
 	public void armazenaComSucesso() {
 		usuarioService.armazenarUsuario(usuario);
 		Assert.assertNotNull(usuario.getId());
+	}
+
+	@Test
+	public void realizarCadastroUsuarioComSucesso() {
+		usuarioService.realizarCadastroUsuario(usuario);
+		Assert.assertNotNull(usuario.getId());
+		Assert.assertEquals(Status.ATIVO, usuario.getStatus());
+	}
+
+	@Test(expected = NegocioException.class)
+	public void statusNaoInformado() {
+		usuario.setStatus(null);
+		usuarioService.armazenarUsuario(usuario);
 	}
 
 	@Test(expected = NegocioException.class)
@@ -55,10 +75,44 @@ public class UsuarioServiceTest extends AbstractTest {
 	}
 
 	@Test(expected = NegocioException.class)
-	public void senhaNaoInformada() {
-		usuario.setSenha(null);
+	public void naoPermitidoCadastroDuplicado() {
+		usuarioService.realizarCadastroUsuario(usuario);
+		Assert.assertNotNull(usuario.getId());
+		usuarioService.realizarCadastroUsuario(usuario);
+	}
+
+	@Test
+	public void limparSenhaUsuario() {
 		usuarioService.armazenarUsuario(usuario);
 		Assert.assertNotNull(usuario.getId());
+		usuario = repositorio.findOne(usuario.getId());
+		usuarioService.limparSenha(usuario.getId());
+		usuario = repositorio.findOne(usuario.getId());
+		Assert.assertTrue(StringUtils.isBlank(usuario.getSenha()));
+	}
+
+	@Test
+	public void inativarUsuario() {
+		usuario.setStatus(Status.ATIVO);
+		usuarioService.armazenarUsuario(usuario);
+		Assert.assertNotNull(usuario.getId());
+		usuario = repositorio.findOne(usuario.getId());
+		usuarioService.inativaUsuario(usuario.getId());
+		usuario = repositorio.findOne(usuario.getId());
+		Assert.assertEquals(Status.INATIVO, usuario.getStatus());
+	}
+
+	@Test
+	public void ativarUsuario() {
+		usuarioService.armazenarUsuario(usuario);
+		Assert.assertNotNull(usuario.getId());
+		usuario = repositorio.findOne(usuario.getId());
+		usuarioService.inativaUsuario(usuario.getId());
+		usuario = repositorio.findOne(usuario.getId());
+		Assert.assertEquals(Status.INATIVO, usuario.getStatus());
+		usuarioService.ativaUsuario(usuario.getId());
+		usuario = repositorio.findOne(usuario.getId());
+		Assert.assertEquals(Status.ATIVO, usuario.getStatus());
 	}
 
 }
