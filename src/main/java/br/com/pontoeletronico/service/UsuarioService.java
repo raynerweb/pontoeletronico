@@ -3,6 +3,8 @@ package br.com.pontoeletronico.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.EnumType;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,15 +45,21 @@ public class UsuarioService {
 	}
 
 	public void limparSenha(Long idUsuario) {
-
+		Usuario user = usuarioRepository.findOne(idUsuario);
+		user.setSenha(null);
+		usuarioRepository.save(user);
 	}
 
 	public void inativaUsuario(Long idUsuario) {
-
+		Usuario user = usuarioRepository.findOne(idUsuario);
+		user.setStatus(Status.INATIVO);
+		usuarioRepository.save(user);
 	}
 
 	public void ativaUsuario(Long idUsuario) {
-
+		Usuario user = usuarioRepository.findOne(idUsuario);
+		user.setStatus(Status.ATIVO);
+		usuarioRepository.save(user);
 	}
 
 	private void validarCamposObrigatorios(Usuario usuario) {

@@ -64,6 +64,8 @@ public class Usuario {
 	}
 
 	public void setSenha(String senha) {
+		if(senha == null)
+			senha = "";
 		this.senha = senha;
 	}
 
