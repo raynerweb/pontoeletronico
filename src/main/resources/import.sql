@@ -1,1 +1,1 @@
-INSERT INTO usuario (nome, matricula, senha, perfil) VALUES ('root', 'root', '123456', 'ROOT', 'ATIVO');
+INSERT INTO usuario (nome, matricula, senha, perfil, status) VALUES ('root', 'root', '123456', 'ROOT', 'ATIVO');
