@@ -4,13 +4,22 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
-	<title>Insert title here</title>
+	<link rel="stylesheet" href="css/login.css" />
+	<link rel="stylesheet" href="css/app.css" />
+	<title>Ponto Eletrônico</title>
 </head>
-<body>
-	Teste
+<body ng-app="app" >
 
+	<div class="container-fluid" ng-view></div>
+	
 	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="bower_components/angular-route/angular-route.min.js"></script>
 	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="app/app.js"></script>
+	<script type="text/javascript" src="app/constants.js"></script>
+	<script type="text/javascript" src="app/login/loginController.js"></script>
+	<script type="text/javascript" src="app/login/loginService.js"></script>
 </body>
 </html>

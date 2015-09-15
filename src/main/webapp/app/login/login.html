@@ -1,0 +1,16 @@
+<div class="modal-dialog">
+	<div class="loginmodal-container">
+		<h1>Login to Your Account</h1>
+		<br>
+		<form name="loginForm" novalidate class="css-form">
+			<input type="text" ng-model="vm.usuario.matricula" name="login" placeholder="Username" required>
+			<p ng-show="(!loginForm.login.$pristine && loginForm.login.$error.required) || (loginForm.submitted && loginForm.login.$error.required)" class="alert alert-danger">Campo obrigatorio</p>
+			<input type="password" ng-model="vm.usuario.senha" name="senha" placeholder="Password" required>
+			<p ng-show="(!loginForm.senha.$pristine && loginForm.senha.$error.required) || (loginForm.submitted && loginForm.senha.$error.required)" class="alert alert-danger">Campo obrigatorio</p>
+			<input type="submit" class="login loginmodal-submit" value="Login" ng-click="vm.login(loginForm)">
+		</form>
+		<div class="login-help">
+			<a href="#login">Register</a> - <a href="#login">Forgot Password</a>
+		</div>
+	</div>
+</div>
