@@ -1,0 +1,21 @@
+{
+  "name": "pontoeletronico",
+  "version": "0.0.1",
+  "homepage": "https://github.com/raynerweb/pontoeletronico",
+  "authors": [
+    "raynerweb <raynerweb@gmail.com>"
+  ],
+  "description": "sistema de ponto eletronico",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "angular": "1.4.5"
+  }
+}
