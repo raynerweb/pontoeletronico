@@ -14,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import br.com.pontoeletronico.exception.NegocioException;
+
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "usuario_id", "dataRegistro" }) )
 public class Ponto {
@@ -129,6 +131,38 @@ public class Ponto {
 
 	public void setPermitidoHoraExtra(boolean permitidoHoraExtra) {
 		this.permitidoHoraExtra = permitidoHoraExtra;
+	}
+
+	public void registraProximoPonto(LocalTime proximoRegistro) {
+		if (getEntradaPrimeiroTurno() == null) {
+			setEntradaPrimeiroTurno(proximoRegistro);
+			return;
+		}
+		if (getSaidaPrimeiroTurno() == null) {
+			setSaidaPrimeiroTurno(proximoRegistro);
+			return;
+		}
+
+		if (getEntradaSegundoTurno() == null) {
+			setEntradaSegundoTurno(proximoRegistro);
+			return;
+		}
+		if (getSaidaSegundoTurno() == null) {
+			setSaidaSegundoTurno(proximoRegistro);
+			return;
+		}
+
+		if (isPermitidoHoraExtra()) {
+			if (getEntradaTerceiroTurno() == null) {
+				setEntradaTerceiroTurno(proximoRegistro);
+				return;
+			}
+			if (getSaidaTerceiroTurno() == null) {
+				setSaidaTerceiroTurno(proximoRegistro);
+				return;
+			}
+		}
+		throw new NegocioException("Todos os registros foram realizados");
 	}
 
 }
