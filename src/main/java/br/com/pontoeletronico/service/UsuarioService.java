@@ -48,13 +48,13 @@ public class UsuarioService {
 		usuarioRepository.save(user);
 	}
 
-	public void inativaUsuario(Long idUsuario) {
+	public void inativarUsuario(Long idUsuario) {
 		Usuario user = usuarioRepository.findOne(idUsuario);
 		user.setStatus(Status.INATIVO);
 		usuarioRepository.save(user);
 	}
 
-	public void ativaUsuario(Long idUsuario) {
+	public void ativarUsuario(Long idUsuario) {
 		Usuario user = usuarioRepository.findOne(idUsuario);
 		user.setStatus(Status.ATIVO);
 		usuarioRepository.save(user);

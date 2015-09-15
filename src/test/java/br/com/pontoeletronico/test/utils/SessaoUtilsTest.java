@@ -46,4 +46,12 @@ public class SessaoUtilsTest {
 		Assert.assertNotNull(request.getSession().getAttribute("usuarioSessao"));
 		Assert.assertTrue(SessaoUtils.isUsuarioNaSessao(request, usuario));
 	}
+	
+	@Test
+	public void getUsuarioLogado(){
+		Usuario usuario = new Usuario();
+		usuario.setId(1l);
+		SessaoUtils.addUsuarioSessao(request, usuario);
+		Assert.assertEquals(usuario, SessaoUtils.getUsuarioLogado(request));
+	}
 }

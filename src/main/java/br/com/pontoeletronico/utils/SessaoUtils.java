@@ -23,7 +23,12 @@ public class SessaoUtils {
 		HttpSession session = request.getSession();
 		Usuario usuarioLogado = usuario.getClass().cast(session.getAttribute(USUARIO_SESSAO));
 		return usuarioLogado != null && usuario != null && usuarioLogado.getId().equals(usuario.getId());
+	}
 
+	public static Usuario getUsuarioLogado(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Usuario usuarioLogado = Usuario.class.cast(session.getAttribute(USUARIO_SESSAO));
+		return usuarioLogado;
 	}
 
 }

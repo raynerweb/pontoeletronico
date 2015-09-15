@@ -64,7 +64,7 @@ public class Usuario {
 	}
 
 	public void setSenha(String senha) {
-		if(senha == null)
+		if (senha == null)
 			senha = "";
 		this.senha = senha;
 	}
@@ -83,6 +83,10 @@ public class Usuario {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public boolean isAutorizado(Perfil perfil) {
+		return getPerfil().getSigla().equals(perfil.getSigla());
 	}
 
 }

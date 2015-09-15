@@ -97,7 +97,7 @@ public class UsuarioServiceTest extends AbstractTest {
 		usuarioService.armazenarUsuario(usuario);
 		Assert.assertNotNull(usuario.getId());
 		usuario = repositorio.findOne(usuario.getId());
-		usuarioService.inativaUsuario(usuario.getId());
+		usuarioService.inativarUsuario(usuario.getId());
 		usuario = repositorio.findOne(usuario.getId());
 		Assert.assertEquals(Status.INATIVO, usuario.getStatus());
 	}
@@ -107,10 +107,10 @@ public class UsuarioServiceTest extends AbstractTest {
 		usuarioService.armazenarUsuario(usuario);
 		Assert.assertNotNull(usuario.getId());
 		usuario = repositorio.findOne(usuario.getId());
-		usuarioService.inativaUsuario(usuario.getId());
+		usuarioService.inativarUsuario(usuario.getId());
 		usuario = repositorio.findOne(usuario.getId());
 		Assert.assertEquals(Status.INATIVO, usuario.getStatus());
-		usuarioService.ativaUsuario(usuario.getId());
+		usuarioService.ativarUsuario(usuario.getId());
 		usuario = repositorio.findOne(usuario.getId());
 		Assert.assertEquals(Status.ATIVO, usuario.getStatus());
 	}
