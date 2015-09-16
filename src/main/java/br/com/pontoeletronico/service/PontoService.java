@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.pontoeletronico.dominio.Ponto;
 import br.com.pontoeletronico.dominio.Usuario;
+import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.repository.PontoRepository;
 import br.com.pontoeletronico.utils.DateUtils;
 
@@ -16,13 +17,17 @@ public class PontoService {
 	@Autowired
 	private PontoRepository pontoRepository;
 
-	public Ponto registrarPonto(Long idUsuario, Date dataRegistro) {
+	public Ponto registrarPonto(Long idUsuario, Date dataRegistro) throws NegocioException {
 		Ponto ponto = recuperarPorDataRegistroIdUsuario(idUsuario, dataRegistro);
 		if (ponto == null) {
 			ponto = novoRegistroDePonto(idUsuario, dataRegistro);
 		}
-		ponto.registraProximoPonto(DateUtils.toLocalTime(dataRegistro));
-		pontoRepository.save(ponto);
+		try {
+			ponto.registraProximoPonto(DateUtils.toLocalTime(dataRegistro));
+			pontoRepository.save(ponto);
+		}catch(Exception ex){
+			throw new NegocioException("");
+		}
 		return ponto;
 	}
 
