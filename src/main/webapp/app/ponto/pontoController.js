@@ -14,9 +14,10 @@
 		vm.registrarPonto = registrarPonto;
 		
 		function iniciar(){
-			var usuario = usuarioObject.recuperar();
-			if (objectUtils.isEmpty(usuario)){
-//				$location.path('/login');
+			vm.usuario = usuarioObject.recuperar();
+			console.log(vm.usuario);
+			if (objectUtils.isEmpty(vm.usuario)){
+				$location.path('/login');
 			}
 			atualizarHora();
 		}
@@ -27,7 +28,7 @@
 		}
 		
 		function registrarPonto(){
-			
+			pontoService.registrarPonto(vm.usuario.id, new Date());
 		}
 	}
 
