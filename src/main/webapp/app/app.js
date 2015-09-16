@@ -9,96 +9,139 @@
 
 			//'ui.bootstrap',
 
-			//Disponibilizando modulos internos
-			//'constantesApps',
-
 			//app
 			'constants',
 			'loginControllers',
-			'loginServices'
+			'loginServices',
+			
+			'painelControllers',
+			'usuarioObjects'
 
 		])
-		.factory('myInterceptor', interceptor)
+		.factory('requestResponseInterceptor', requestResponseInterceptor)
+//		.factory('usuarioObject', usuarioObject)
 		.config([
 			'$httpProvider',
 			'$routeProvider',
 			appConfig
 		])
+//		.run(['$rootScope',
+//		      '$location',
+//		      
+//		      authorizationFilter]);
 		.run([function(){
 			angular.noop;
 		}]);
 	
-		function interceptor($q) {
+	function usuarioObject() {
+		var usuario = {};
 		
-			return {
-//				request : requestInterceptor,
-				requestError : requestErrorInterceptor,
-//				response : responseInterceptor,
-				responseError: responseErrorInterceptor
-			};
-			
-			function requestInterceptor(config){
-//				console.log(JSON.stringify(config));
-			}
-			
-			function requestErrorInterceptor(rejection){
-				console.log(JSON.stringify(rejection));
-				return $q.reject(rejection);
-			}
-			
-			function responseInterceptor(response){
-//				console.log(JSON.stringify(response));
-			}
-			
-			function responseErrorInterceptor(rejection){
-				console.log(JSON.stringify(rejection));
-				return $q.reject(rejection);
-			}
-			
+		return {
+			novo : novo,
+			carregar : carregar,
+			recuperar : recuperar
 		}
 
-		function appConfig($httpProvider, $routeProvider){
-//			$httpProvider.defaults.withCredentials = true;
-//			$httpProvider.defaults.useXDomain = true;
-			
-//			function httpInterceptor($q){
-//				return {
-//					'request': requestInterceptor,
-//					'requestError': requestErrorInterceptor,
-//					'response' : responseInterceptor,
-//					'responseError': responseErrorInterceptor
-//				};
-//				
-//				function requestInterceptor(config){
-//					console.log(config);
-//				}
-//				
-//				function requestErrorInterceptor(rejection){
-//					console.log(rejection);
-//				}
-//				
-//				function responseInterceptor(response){
-//					console.log(response);
-//				}
-//				
-//				function responseErrorInterceptor(rejection){
-//					console.log(rejection);
-//				}
-//				
-//			};
-//			
-			$httpProvider.interceptors.push('myInterceptor');
-			
-
-			$routeProvider.
-				when('/login', {
-					templateUrl  : 'app/login/login.html',
-					controller   : 'loginController',
-					controllerAs : 'vm'
-				}).
-				otherwise({
-					redirectTo: '/login'
-				});
+		function novo() {
+			usuario.nome = '';
+			usuario.matricula = '';
+			usuario.perfil = '';
+			return usuario;
 		}
+		
+		function carregar(u) {
+			angular.copy(u, usuario);
+			return usuario;
+		}
+		
+		function recuperar(){
+			return usuario;
+		}
+
+	}
+	
+	function authorizationFilter($rootScope, $location){
+		$rootScope.$on('$routeChangeStart', function (event, next) {
+			console.log(event);
+			console.log(next);
+			console.log(usuarioObject);
+			if (next.access){
+				console.log(next.access);
+			}
+//            var authorised;
+//            if (next.access !== undefined) {
+//                authorised = authorization.authorize(next.access.loginRequired,
+//                                                     next.access.permissions,
+//                                                     next.access.permissionCheckType);
+//                if (authorised === jcs.modules.auth.enums.authorised.loginRequired) {
+//                    $location.path(jcs.modules.auth.routes.login);
+//                } else if (authorised === jcs.modules.auth.enums.authorised.notAuthorised) {
+//                    $location.path(jcs.modules.auth.routes.notAuthorised).replace();
+//                }
+//            }
+        });
+	}
+	
+	function requestResponseInterceptor($q, $rootScope) {
+	
+		return {
+			request : requestInterceptor,
+			requestError : requestErrorInterceptor,
+			response : responseInterceptor,
+			responseError: responseErrorInterceptor
+		};
+		
+		function requestInterceptor(config){
+			$rootScope.errors = null;
+			return config;
+		}
+		
+		function requestErrorInterceptor(rejection){
+			return $q.reject(rejection);
+		}
+		
+		function responseInterceptor(response){
+			return response;
+		}
+		
+		function responseErrorInterceptor(rejection){
+			var errors = [];
+			angular.forEach(rejection.data, function(value, key){
+				errors.push(value);
+			});
+			if (!objectUtils.isEmpty(errors)){
+				$rootScope.errors = errors;
+			}
+			return $q.reject(rejection);
+		}
+		
+	}
+
+	function appConfig($httpProvider, $routeProvider){
+//		$httpProvider.defaults.withCredentials = true;
+//		$httpProvider.defaults.useXDomain = true;
+		
+		$httpProvider.interceptors.push('requestResponseInterceptor');
+
+		$routeProvider.
+			when('/login', {
+				templateUrl  : 'app/login/login.html',
+				controller   : 'loginController',
+				controllerAs : 'vm',
+				access : {
+					requiredLogin : true,
+					roles : ['', '', '']
+				}
+			}).
+			when('/painel', {
+				templateUrl  : 'app/painel/painel.html',
+				controller   : 'painelController',
+				controllerAs : 'vm',
+				perfil : 'ROOT'
+			}).
+			otherwise({
+				redirectTo: '/login'
+			});
+	}
 
 })(angular);

@@ -88,5 +88,5 @@ public class Usuario {
 	public boolean isAutorizado(Perfil perfil) {
 		return getPerfil().getSigla().equals(perfil.getSigla());
 	}
-
+	
 }

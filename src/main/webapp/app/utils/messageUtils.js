@@ -2,10 +2,10 @@
 	'use strict';
 
 	angular
-		.module('loginServices', [])
-		.factory('loginService', loginService);
+		.module('messageUtilss', [])
+		.factory('messageUtils', messageUtils);
 
-	function loginService($http, $location, usuarioObject, CONTEXTO) {
+	function messageUtils() {
 
 		return {
 			login : login
@@ -15,10 +15,8 @@
 			return $http.post(CONTEXTO + '/login', usuario)
 			.then(
 				function(response) {
-					if (response.statusText == "OK") {
-						usuarioObject.carregar(response.data);
-						$location.path('/painel');
-					}
+					console.log(response);
+//					angular.copy(response.data);
 				}, 
 				errorCallback
 			);

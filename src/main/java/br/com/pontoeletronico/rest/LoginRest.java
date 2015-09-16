@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,10 +24,10 @@ public class LoginRest {
 	private UsuarioService usuarioService;
 
 	@POST
-	public String login(Usuario usuario, @Context HttpServletRequest request) {
-		usuarioService.realizarLogin(usuario);
-		SessaoUtils.addUsuarioSessao(request, usuario);
-		return "OK";
+	public Response login(Usuario usuario, @Context HttpServletRequest request) {
+		Usuario usuarioLogado = usuarioService.realizarLogin(usuario);
+		SessaoUtils.addUsuarioSessao(request, usuarioLogado);
+		return Response.ok(usuarioLogado).build();
 	}
 
 }
