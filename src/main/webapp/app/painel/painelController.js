@@ -11,7 +11,6 @@
 		vm.iniciar = iniciar;
 		
 		function iniciar(){
-			console.log($route.perfil);
 			var usuario = usuarioObject.recuperar();
 			if (objectUtils.isEmpty(usuario)){
 				$location.path('/login');

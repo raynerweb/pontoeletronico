@@ -127,17 +127,12 @@
 			when('/login', {
 				templateUrl  : 'app/login/login.html',
 				controller   : 'loginController',
-				controllerAs : 'vm',
-				access : {
-					requiredLogin : true,
-					roles : ['', '', '']
-				}
+				controllerAs : 'vm'
 			}).
 			when('/painel', {
 				templateUrl  : 'app/painel/painel.html',
 				controller   : 'painelController',
-				controllerAs : 'vm',
-				perfil : 'ROOT'
+				controllerAs : 'vm'
 			}).
 			otherwise({
 				redirectTo: '/login'
