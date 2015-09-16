@@ -12,6 +12,8 @@
 			'loginControllers',
 			'loginServices',
 			'painelControllers',
+			'pontoControllers',
+			'pontoServices',
 			'usuarioObjects'
 
 		])

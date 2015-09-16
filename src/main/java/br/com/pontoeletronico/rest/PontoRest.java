@@ -1,5 +1,5 @@
 package br.com.pontoeletronico.rest;
 
-public class RegistrarPontoRest {
+public class PontoRest {
 
 }

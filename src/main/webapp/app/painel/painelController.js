@@ -15,6 +15,10 @@
 			if (objectUtils.isEmpty(usuario)){
 //				$location.path('/login');
 			}
+			
+			vm.tabs = [];
+			var abaPonto = {titulo : 'Registro de Ponto', template : 'app/ponto/ponto.html', active: true, disabled: false};
+			vm.tabs.push(abaPonto);
 		}
 
 	}
