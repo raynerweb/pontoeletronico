@@ -13,7 +13,7 @@
 		function iniciar(){
 			var usuario = usuarioObject.recuperar();
 			if (objectUtils.isEmpty(usuario)){
-				$location.path('/login');
+//				$location.path('/login');
 			}
 		}
 

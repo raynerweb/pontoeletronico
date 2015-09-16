@@ -4,16 +4,13 @@
 	angular
 		.module('app', [
 
-			//$routeProvider
 			'ngRoute',
-
-			//'ui.bootstrap',
+			'ui.bootstrap',
 
 			//app
 			'constants',
 			'loginControllers',
 			'loginServices',
-			
 			'painelControllers',
 			'usuarioObjects'
 
