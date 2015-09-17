@@ -36,8 +36,25 @@ public class PontoService {
 		pontoRepository.save(ponto);
 		return ponto;
 	}
+	
+	public Ponto recuperarPonto(Long idUsuario, Date dataRegistro, Usuario usuarioLogado){
+		Map<String, String> errors = new HashMap<String, String>();
+		if (idUsuario == null) {
+			errors.put("usuario", "Usuário não informado");
+		}
+		if (dataRegistro == null) {
+			errors.put("dataRegistro", "Data do registro não informado");
+		}
+		if (usuarioLogado == null) {
+			errors.put("usuario", "Usuario não encontrado");
+		}
+		if (!errors.isEmpty()) {
+			throw new NegocioException(errors);
+		}
+		return recuperarPorDataRegistroIdUsuario(idUsuario, dataRegistro);
+	}
 
-	public Ponto recuperarPorDataRegistroIdUsuario(Long idUsuario, Date dataRegistro) {
+	private Ponto recuperarPorDataRegistroIdUsuario(Long idUsuario, Date dataRegistro) {
 		return pontoRepository.findByDataRegistroAndUsuarioId(DateUtils.toLocalDate(dataRegistro), idUsuario);
 	}
 

@@ -1,10 +1,7 @@
 <!-- <p ng-init="vm.iniciar()">TESTE</p> -->
 <div class="row" ng-init="vm.iniciar()">
 	<tabset>
-		<tab ng-repeat="tab in vm.tabs" active="tab.active" disable="tab.disabled">
-			<tab-heading>
-				<i class="glyphicon glyphicon-bell"></i>{{tab.titulo}}
-			</tab-heading>
+		<tab ng-repeat="tab in vm.tabs" heading="{{tab.titulo}}" active="tab.active" disable="tab.disabled">
 			<div ng-include="tab.template"></div>
 		</tab>
 	</tabset>

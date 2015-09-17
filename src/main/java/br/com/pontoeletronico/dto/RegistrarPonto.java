@@ -1,7 +1,8 @@
 package br.com.pontoeletronico.dto;
 
-import java.util.Calendar;
 import java.util.Date;
+
+import br.com.pontoeletronico.utils.DateUtils;
 
 public class RegistrarPonto {
 
@@ -21,9 +22,7 @@ public class RegistrarPonto {
 	}
 
 	public void setDataRegistro(Long dataRegistro) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(dataRegistro);
-		this.dataRegistro = cal.getTime();
+		this.dataRegistro = DateUtils.toDate(dataRegistro);
 	}
 
 }

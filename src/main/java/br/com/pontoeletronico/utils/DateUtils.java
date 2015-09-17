@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
@@ -37,6 +38,12 @@ public class DateUtils {
 		LocalDate date = LocalDate.of(localDate.getYear(), localDate.getMonth(), localDate.getDayOfMonth());
 		Instant instant = localTime.atDate(date).atZone(ZoneId.systemDefault()).toInstant();
 		return Date.from(instant);
+	}
+
+	public static Date toDate(Long milliseconds) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(milliseconds);
+		return cal.getTime();
 	}
 
 }

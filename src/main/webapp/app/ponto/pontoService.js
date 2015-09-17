@@ -16,7 +16,7 @@
 			registroPonto.idUsuario = idUsuario;
 			registroPonto.dataRegistro = dataRegistro.getTime();
 			
-			return $http.post(CONTEXTO + '/registrar-ponto', registroPonto)
+			return $http.post(CONTEXTO + '/ponto/registrar', registroPonto)
 			.then(
 				function(response) {
 					console.log(response);

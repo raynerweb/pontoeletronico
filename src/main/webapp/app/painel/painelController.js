@@ -17,8 +17,10 @@
 			}
 			
 			vm.tabs = [];
-			var abaPonto = {titulo : 'Registro de Ponto', template : 'app/ponto/ponto.html', active: true, disabled: false};
+			var abaPonto = {titulo : 'Registrar Ponto', template : 'app/ponto/ponto.html', active: true, disabled: false};
+			var abaOcorrencia = {titulo : 'Ocorrências', template : 'app/ocorrencia/ocorrencia.html', active: false, disabled: false};
 			vm.tabs.push(abaPonto);
+			vm.tabs.push(abaOcorrencia);
 		}
 
 	}
