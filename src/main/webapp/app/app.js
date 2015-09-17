@@ -117,8 +117,8 @@
 	}
 
 	function appConfig($httpProvider, $routeProvider){
-//		$httpProvider.defaults.withCredentials = true;
-//		$httpProvider.defaults.useXDomain = true;
+		$httpProvider.defaults.withCredentials = true;
+		$httpProvider.defaults.useXDomain = true;
 		
 		$httpProvider.interceptors.push('requestResponseInterceptor');
 

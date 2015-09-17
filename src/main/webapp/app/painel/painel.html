@@ -15,8 +15,14 @@
 	<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
-				<li ng-class="{active : menu.active}" ng-repeat="menu in vm.menus">
-					<a href="" ng-click="vm.alterarView(menu)">{{menu.titulo}} <span class="sr-only">(current)</span></a>
+				<li ng-class="{active : menu.active}" ng-repeat="menu in vm.menus" dropdown>
+					<a  ng-if="!menu.filhos" href="" ng-click="vm.alterarView(menu)" dropdown-toggle id="simple-dropdown">{{menu.titulo}}</a>
+					<a  ng-if="menu.filhos" href="" dropdown-toggle id="simple-dropdown">{{menu.titulo}} <span class="caret"></span></a>
+					<ul ng-if="menu.filhos" class="dropdown-menu" aria-labelledby="simple-dropdown">
+						<li ng-repeat="submenu in menu.filhos">
+							<a href ng-click="vm.alterarView(submenu)">{{submenu.titulo}}</a>
+						</li>
+					</ul>
 				</li>
 				<li>
 					<a href="" ng-click="vm.logout()">Logout</a>
