@@ -1,8 +1,29 @@
 <!-- <p ng-init="vm.iniciar()">TESTE</p> -->
-<div class="row" ng-init="vm.iniciar()">
-	<tabset>
-		<tab ng-repeat="tab in vm.tabs" heading="{{tab.titulo}}" active="tab.active" disable="tab.disabled">
-			<div ng-include="tab.template"></div>
-		</tab>
-	</tabset>
-</div>
+<nav class="navbar navbar-inverse navbar-static-top" ng-init="vm.iniciar()">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="">Ponto Eletrônico</a>
+		</div>
+
+	<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-class="{active : menu.active}" ng-repeat="menu in vm.menus">
+					<a href="" ng-click="vm.alterarView(menu)">{{menu.titulo}} <span class="sr-only">(current)</span></a>
+				</li>
+				<li>
+					<a href="" ng-click="vm.logout()">Logout</a>
+				</li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>
+
+<div ng-include="vm.template"></div>

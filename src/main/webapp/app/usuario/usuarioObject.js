@@ -11,7 +11,8 @@
 		return {
 			novo : novo,
 			carregar : carregar,
-			recuperar : recuperar
+			recuperar : recuperar,
+			limpar : limpar
 		}
 
 		function novo() {
@@ -28,6 +29,10 @@
 		
 		function recuperar(){
 			return usuario;
+		}
+		
+		function limpar(){
+			usuario = {};
 		}
 
 	}

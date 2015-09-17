@@ -8,7 +8,8 @@
 	function loginService($http, $location, usuarioObject, CONTEXTO) {
 
 		return {
-			login : login
+			login : login,
+			logout : logout
 		}
 
 		function login(usuario) {
@@ -18,6 +19,19 @@
 					if (response.statusText == "OK") {
 						usuarioObject.carregar(response.data);
 						$location.path('/painel');
+					}
+				}, 
+				errorCallback
+			);
+		}
+		
+		function logout(){
+			return $http.get(CONTEXTO + '/login/logout')
+			.then(
+				function(response) {
+					if (response.statusText == "OK") {
+						usuarioObject.limpar()
+						$location.path('/login');
 					}
 				}, 
 				errorCallback

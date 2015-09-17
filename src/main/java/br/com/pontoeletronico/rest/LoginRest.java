@@ -2,6 +2,7 @@ package br.com.pontoeletronico.rest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -23,11 +24,21 @@ public class LoginRest {
 	@Autowired
 	private UsuarioService usuarioService;
 
+	@Context
+	private HttpServletRequest request;
+
 	@POST
-	public Response login(Usuario usuario, @Context HttpServletRequest request) {
+	public Response login(Usuario usuario) {
 		Usuario usuarioLogado = usuarioService.realizarLogin(usuario);
 		SessaoUtils.addUsuarioSessao(request, usuarioLogado);
 		return Response.ok(usuarioLogado).build();
+	}
+
+	@GET
+	@Path("logout")
+	public Response logout() {
+		SessaoUtils.removeUsuarioSessao(request);
+		return Response.ok().build();
 	}
 
 }

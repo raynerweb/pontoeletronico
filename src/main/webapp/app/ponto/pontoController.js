@@ -10,6 +10,7 @@
 		
 		vm.relogio = new Date();
 		vm.alerts = [];
+		vm.botaoDesabilitado = false;
 		vm.iniciar = iniciar;
 		vm.atualizarHora = atualizarHora;
 		vm.registrarPonto = registrarPonto;
@@ -18,7 +19,7 @@
 		function iniciar(){
 			vm.usuario = usuarioObject.recuperar();
 			if (objectUtils.isEmpty(vm.usuario)){
-				$location.path('/login');
+//				$location.path('/login');
 			}
 			atualizarHora();
 		}
@@ -29,7 +30,9 @@
 		}
 		
 		function registrarPonto(){
-			pontoService.registrarPonto(vm.usuario.id, vm.relogio, vm.alerts);
+			pontoService.registrarPonto(vm.usuario.id, vm.relogio, vm.alerts).then(function(response){
+				vm.botaoDesabilitado = true;
+			});
 		}
 		
 		function fecharAlert(index){

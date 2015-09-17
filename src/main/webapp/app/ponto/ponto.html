@@ -1,6 +1,17 @@
 
-<div ng-controller="pontoController as vm" ng-init="vm.iniciar()">
-	<alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.fecharAlert($index)">{{alert.msg}}</alert>
-	<p>{{vm.relogio | date:'dd/MM/yyyy HH:mm:ss' }}</p>
-	<button ng-click="vm.registrarPonto()" class="btn btn-default">Registrar ponto</button>
+<div ng-controller="pontoController as vm" ng-init="vm.iniciar()" class="container-fluid">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.fecharAlert($index)">{{alert.msg}}</alert>
+		</div>
+		<div class="col-md-8 col-md-offset-2">
+			<div class="jumbotron  text-center">
+				<h2>Registro de ponto</h2>
+				<p class="">{{vm.relogio | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+				<p class="">
+					<button ng-click="vm.registrarPonto()" class="btn btn btn-primary btn-lg" ng-disabled="vm.botaoDesabilitado">Registrar ponto</button>
+				</p>
+			</div>
+		</div>
+	</div>
 </div>
