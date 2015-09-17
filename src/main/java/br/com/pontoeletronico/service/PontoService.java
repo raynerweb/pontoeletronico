@@ -2,6 +2,7 @@ package br.com.pontoeletronico.service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class PontoService {
 		pontoRepository.save(ponto);
 		return ponto;
 	}
-	
-	public Ponto recuperarPonto(Long idUsuario, Date dataRegistro, Usuario usuarioLogado){
+
+	public Ponto recuperarPonto(Long idUsuario, Date dataRegistro, Usuario usuarioLogado) {
 		Map<String, String> errors = new HashMap<String, String>();
 		if (idUsuario == null) {
 			errors.put("usuario", "Usuário não informado");
@@ -52,6 +53,10 @@ public class PontoService {
 			throw new NegocioException(errors);
 		}
 		return recuperarPorDataRegistroIdUsuario(idUsuario, dataRegistro);
+	}
+
+	public List<Ponto> recuperarRegistrosPontoUsuarioId(Long idUsuario) {
+		return pontoRepository.findByUsuarioIdOrderByDataRegistroDesc(idUsuario);
 	}
 
 	private Ponto recuperarPorDataRegistroIdUsuario(Long idUsuario, Date dataRegistro) {

@@ -1,1 +1,13 @@
-teste
+<div class="row" ng-controller="ocorrenciaController as vm">
+	<div class="col-md-2">
+		<ul class="nav nav-pills nav-stacked">
+			<li role="presentation">
+				<a href="">Nova ocorrência</a>
+			</li>
+			<li role="presentation">
+				<a href="">Listar ocorrência</a>
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-10" ng-include="vm.template"></div>
+</div>

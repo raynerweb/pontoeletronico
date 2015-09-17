@@ -47,5 +47,10 @@ public class PontoRest {
 				SessaoUtils.getUsuarioLogado(request));
 		return Response.ok(ponto).build();
 	}
+	
+	@GET
+	public Response recuperarTodos(@QueryParam("idUsuario") Long idUsuario){
+		return Response.ok().build();
+	}
 
 }

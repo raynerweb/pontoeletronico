@@ -18,7 +18,7 @@
 		function iniciar(){
 			var usuario = usuarioObject.recuperar();
 			if (objectUtils.isEmpty(usuario)){
-				$location.path('/login');
+//				$location.path('/login');
 			}
 
 			var ponto = {titulo : 'Ponto', template : 'app/ponto/ponto.html', active: true, disabled: false};
