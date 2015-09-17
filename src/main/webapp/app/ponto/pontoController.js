@@ -9,13 +9,14 @@
 		var vm = this;
 		
 		vm.relogio = new Date();
+		vm.alerts = [];
 		vm.iniciar = iniciar;
 		vm.atualizarHora = atualizarHora;
 		vm.registrarPonto = registrarPonto;
+		vm.fecharAlert = fecharAlert;
 		
 		function iniciar(){
 			vm.usuario = usuarioObject.recuperar();
-			console.log(vm.usuario);
 			if (objectUtils.isEmpty(vm.usuario)){
 				$location.path('/login');
 			}
@@ -28,7 +29,11 @@
 		}
 		
 		function registrarPonto(){
-			pontoService.registrarPonto(vm.usuario.id, new Date());
+			pontoService.registrarPonto(vm.usuario.id, vm.relogio, vm.alerts);
+		}
+		
+		function fecharAlert(index){
+			vm.alerts.splice(index, 1);
 		}
 	}
 

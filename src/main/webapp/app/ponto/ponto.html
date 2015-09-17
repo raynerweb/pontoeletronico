@@ -1,4 +1,6 @@
+
 <div ng-controller="pontoController as vm" ng-init="vm.iniciar()">
+	<alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.fecharAlert($index)">{{alert.msg}}</alert>
 	<p>{{vm.relogio | date:'dd/MM/yyyy HH:mm:ss' }}</p>
 	<button ng-click="vm.registrarPonto()" class="btn btn-default">Registrar ponto</button>
 </div>

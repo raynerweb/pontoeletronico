@@ -2,16 +2,20 @@
 	'use strict';
 
 	angular
-		.module('messageUtilss', [])
-		.factory('messageUtils', messageUtils);
+		.module('alertModule', [])
+		.factory('alertUtils', alertUtils);
 
-	function messageUtils() {
+	function alertUtils() {
 
 		return {
-			login : login
+			success : success,
+			info : info,
+			warning : warning,
+			danger : danger,
+			limpar : limpar
 		}
 
-		function login(usuario) {
+		function success(alerts) {
 			return $http.post(CONTEXTO + '/login', usuario)
 			.then(
 				function(response) {

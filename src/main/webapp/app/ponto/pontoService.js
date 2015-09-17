@@ -11,14 +11,17 @@
 			registrarPonto : registrarPonto
 		}
 
-		function registrarPonto(idUsuario, dataRegistro) {
-			return $http.post(CONTEXTO + '/registrar-ponto', {idUsuario : idUsuario, dataRegistro : dataRegistro})
+		function registrarPonto(idUsuario, dataRegistro, alerts) {
+			var registroPonto = {};
+			registroPonto.idUsuario = idUsuario;
+			registroPonto.dataRegistro = dataRegistro.getTime();
+			
+			return $http.post(CONTEXTO + '/registrar-ponto', registroPonto)
 			.then(
 				function(response) {
 					console.log(response);
 					if (response.statusText == "OK") {
-//						usuarioObject.carregar(response.data);
-//						$location.path('/painel');
+						alerts.push({type:'success', msg : 'Registro realizado com sucesso'});
 					}
 				}, 
 				errorCallback
