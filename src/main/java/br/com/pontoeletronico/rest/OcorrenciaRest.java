@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -53,14 +54,16 @@ public class OcorrenciaRest {
 	@Path("/consultarUsuarioId")
 	@GET
 	public List<Ocorrencia> consultarUsuarioId(
-			@QueryParam("usuarioId") Long usuarioId){
+			@QueryParam("usuarioId") Long usuarioId) throws NegocioException {
 		return getOcorrenciaService().consultarUsuarioId(usuarioId);
 	}
 	
 	@Path("/registrarOcorrencia")
 	@POST
-	public void registrarOcorrencia(Ocorrencia ocorrencia){
+	public Response registrarOcorrencia(Ocorrencia ocorrencia) 
+			throws NegocioException {
 		getOcorrenciaService().registrarOcorrencia(ocorrencia);
+		return Response.ok().build();
 	}
 
 	public OcorrenciaService getOcorrenciaService() {

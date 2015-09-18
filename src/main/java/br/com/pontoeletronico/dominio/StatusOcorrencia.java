@@ -18,6 +18,6 @@ public enum StatusOcorrencia {
 			if(status.getSigla().equals(sigla))
 				return status.getSigla();
 		}
-		return "";
+		return null;
 	}
 }

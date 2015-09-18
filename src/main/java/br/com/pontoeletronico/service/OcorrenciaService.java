@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.pontoeletronico.dominio.Ocorrencia;
 import br.com.pontoeletronico.dominio.StatusOcorrencia;
+import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.repository.OcorrenciaRepository;
 
 @Service
@@ -15,21 +16,27 @@ public class OcorrenciaService {
 	@Autowired
 	private OcorrenciaRepository ocorrenciaRepository;
 	
-	public List<Ocorrencia> consultarStatusOcorrencia(StatusOcorrencia status){
-		return getOcorrenciaRepository().findByStatusOcorrencia(status);
+	public List<Ocorrencia> consultarStatusOcorrencia(StatusOcorrencia status) 
+			throws NegocioException {
+		if(status != null)
+			return getOcorrenciaRepository().findByStatusOcorrencia(status);
+		else
+			throw new NegocioException("Status Ocorrência não informado");
 	}
 	
 	public List<Ocorrencia> consultarStatusOcorrenciaUsuarioId(
-			Ocorrencia ocorrencia){
+			Ocorrencia ocorrencia) throws NegocioException {
 		return getOcorrenciaRepository().findByStatusOcorrenciaAndUsuarioId(
 				ocorrencia.getStatusOcorrencia(), ocorrencia.getId());
 	}
 	
-	public List<Ocorrencia> consultarUsuarioId(Long usuarioId){
+	public List<Ocorrencia> consultarUsuarioId(Long usuarioId) 
+			throws NegocioException {
 		return getOcorrenciaRepository().findByUsuarioId(usuarioId);
 	}
 	
-	public void registrarOcorrencia(Ocorrencia ocorrencia){
+	public void registrarOcorrencia(Ocorrencia ocorrencia) 
+			throws NegocioException {
 		getOcorrenciaRepository().save(ocorrencia);
 	}
 
