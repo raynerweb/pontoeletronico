@@ -16,49 +16,99 @@
 		
 		<alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.fecharAlert($index)">{{alert.msg}}</alert>
 		
-		<form class="form-horizontal" ng-init="vm.iniciarCalendario()">
-			<div class="form-group">
-				<label for="dataRegistro" class="col-sm-2 control-label">Status da Ocorrência</label>
-				<div class="col-sm-6">
-					<div class="btn-group">
-						<label class="btn btn-default" ng-model="vm.statusOcorrencia.abertas" btn-checkbox>Abertas</label>
-						<label class="btn btn-default" ng-model="vm.statusOcorrencia.aceitas" btn-checkbox>Aceitas</label>
-						<label class="btn btn-default" ng-model="vm.statusOcorrencia.rejeitadas" btn-checkbox>Rejeitadas</label>
-						retirar --> {{vm.statusOcorrencia}}
+		<accordion>
+			<accordion-group heading="Filtros" is-open="vm.apresentarFiltros">
+				<form class="form-horizontal" ng-init="vm.iniciarCalendario()">
+					<div class="form-group">
+						<label for="dataRegistro" class="col-sm-2 control-label">Status da Ocorrência</label>
+						<div class="col-sm-6">
+							<div class="btn-group">
+								<label class="btn btn-default" ng-model="vm.statusOcorrencia.abertas" btn-checkbox>Abertas</label>
+								<label class="btn btn-default" ng-model="vm.statusOcorrencia.aceitas" btn-checkbox>Aceitas</label>
+								<label class="btn btn-default" ng-model="vm.statusOcorrencia.rejeitadas" btn-checkbox>Rejeitadas</label>
+								retirar --> {{vm.statusOcorrencia}}
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="dataRegistro" class="col-sm-2 control-label">Data inicial</label>
-				<div class="col-sm-2">
-					<p class="input-group">
-						<input type="text" class="form-control" id="dataRegistro"
-							datepicker-popup="{{vm.calendarioFormat}}" ng-model="vm.calendarioInicial.data" current-text="Hoje" clear-text="Limpar" close-text="Fechar"
-							is-open="vm.calendarioInicial.isOpen" max-date="vm.calendarioInicial.maxDate" ng-required="true" close-text="Close" ng-disabled="true"/>
-						<span class="input-group-btn">
-							<button type="button" class="btn btn-default" ng-click="vm.mostrarCalendarioInicial($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-						</span>
-					</p>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="dataRegistro" class="col-sm-2 control-label">Data final</label>
-				<div class="col-sm-2">
-					<p class="input-group">
-						<input type="text" class="form-control" id="dataRegistro"
-							datepicker-popup="{{vm.calendarioFormat}}" ng-model="vm.calendarioFinal.data" current-text="Hoje" clear-text="Limpar" close-text="Fechar"
-							is-open="vm.calendarioFinal.isOpen" max-date="vm.calendarioFinal.maxDate" ng-required="true" close-text="Close" ng-disabled="true"/>
-						<span class="input-group-btn">
-							<button type="button" class="btn btn-default" ng-click="vm.mostrarCalendarioFinal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-						</span>
-					</p>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-primary" ng-click="vm.listarOcorrencias()">Pesquisar</button>Verificar a necessidade. A intenção é que a pesquisa ocorra a cada alteracao do formulario
-				</div>
-			</div>
-		</form>
+					<div class="form-group">
+						<label for="dataInicial" class="col-sm-2 control-label">Período</label>
+						<div class="col-sm-6">
+							<div class="form-inline">
+								<p class="input-group">
+									<input type="text" class="form-control" id="dataInicial"
+										datepicker-popup="{{vm.calendarioFormat}}" ng-model="vm.calendarioInicial.data" current-text="Hoje" clear-text="Limpar" close-text="Fechar"
+										is-open="vm.calendarioInicial.isOpen" max-date="vm.calendarioInicial.maxDate" ng-required="true" close-text="Close" ng-disabled="true"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="vm.mostrarCalendarioInicial($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+								</p>
+								à
+								<p class="input-group">
+									<input type="text" class="form-control" id="dataFinal"
+										datepicker-popup="{{vm.calendarioFormat}}" ng-model="vm.calendarioFinal.data" current-text="Hoje" clear-text="Limpar" close-text="Fechar"
+										is-open="vm.calendarioFinal.isOpen" max-date="vm.calendarioFinal.maxDate" ng-required="true" close-text="Close" ng-disabled="true"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="vm.mostrarCalendarioFinal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</form>
+			</accordion-group>
+		</accordion>
+		
+		<table class="table table-condensed table-hover table-striped table-bordered ">
+			<thead>
+				<tr>
+					<th rowspan="2" class="text-center vert-align">Data Registro</th>
+					<th colspan="2" class="text-center">Primeiro Turno</th>
+					<th colspan="2" class="text-center">Segundo Turno</th>
+					<th colspan="2" class="text-center">Terceiro Turno</th>
+					<th rowspan="2" class="text-center vert-align">Status da Ocorrência</th>
+				</tr>
+				<tr>
+					<th class="text-center">Entrada</th>
+					<th class="text-center">Saída</th>
+					<th class="text-center">Entrada</th>
+					<th class="text-center">Saída</th>
+					<th class="text-center">Entrada</th>
+					<th class="text-center">Saída</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-center">
+					<td><span popover-placement="right" popover="{{vm.justificativaDaOcorrencia}}" popover-trigger="mouseenter">10/09/2015</span></td>
+					<td>08:00</td>
+					<td>12:00</td>
+					<td>13:00</td>
+					<td>18:00</td>
+					<td>-</td>
+					<td>-</td>
+					<td>Aberta</td>
+				</tr>
+				<tr class="text-center danger">
+					<td><span popover-placement="right" popover="{{vm.justificativaDaOcorrencia}}" popover-trigger="mouseenter">11/09/2015</span></td>
+					<td>08:00</td>
+					<td>12:00</td>
+					<td>13:00</td>
+					<td>18:00</td>
+					<td>-</td>
+					<td>-</td>
+					<td>Rejeitada</td>
+				</tr>
+				<tr class="text-center">
+					<td><span popover-placement="right" popover="{{vm.justificativaDaOcorrencia}}" popover-trigger="mouseenter">12/09/2015</span></td>
+					<td>08:00</td>
+					<td>12:00</td>
+					<td>13:00</td>
+					<td>18:00</td>
+					<td>18:01</td>
+					<td>22:45</td>
+					<td>Aceita</td>
+				</tr>
+			</tbody>
+		</table>
+		
 	</div>
 </div>

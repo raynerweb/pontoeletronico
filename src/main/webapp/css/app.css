@@ -1,0 +1,3 @@
+.table tbody>tr>td.vert-align, .table thead>tr>th.vert-align{
+    vertical-align: middle;
+}

@@ -9,8 +9,10 @@
 		var vm = this;
 		
 		vm.alerts = [];
-		
+		vm.apresentarFiltros = false;
 		vm.statusOcorrencia = {};
+		
+		vm.justificativaDaOcorrencia = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras diam enim, ultricies sit amet orci a, placerat malesuada lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In pulvinar pharetra elit, ut euismod velit. Vestibulum non congue metus, quis feugiat lacus. Aliquam erat volutpat. Aliquam sodales convallis nibh, a cursus nulla facilisis eu. Cras id eros nisl. Vivamus tincidunt mi arcu, viverra luctus urna pulvinar in. ";
 		
 		vm.iniciar = iniciar;
 		vm.iniciarCalendario = iniciarCalendario;
@@ -24,6 +26,8 @@
 			if (objectUtils.isEmpty(usuario)){
 //				$location.path('/login');
 			}
+			
+			vm.alerts.push({type : 'info' , msg : 'A intenção é que a pesquisa ocorra a cada alteracao do formulario'});
 		}
 		
 		function iniciarCalendario(){
@@ -50,6 +54,10 @@
 		
 		function fecharAlert(index){
 			vm.alerts.splice(index, 1);
+		}
+		
+		function toogleFiltros(){
+			vm.apresentarFiltros = !vm.apresentarFiltros;
 		}
 		
 		function listarOcorrencias(){
