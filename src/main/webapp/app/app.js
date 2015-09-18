@@ -9,6 +9,7 @@
 
 			//app
 			'constants',
+			'perfilServices',
 			'loginControllers',
 			'loginServices',
 			'painelControllers',

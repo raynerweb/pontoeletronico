@@ -1,0 +1,30 @@
+<div class="container-fluid"  ng-controller="cadastrarUsuarioController as vm" ng-init="vm.iniciar()">
+	<div class="row">
+		<h2>Cadastrar Usuário</h2>
+		
+		<alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.fecharAlert($index)">{{alert.msg}}</alert>
+		
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="nomeUsuario" class="col-sm-2 control-label">Nome</label>
+				<div class="col-sm-4">
+					<input id="nomeUsuario" type="text" class="form-control" ng-model="vm.usuario.nome" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="matriculaUsuario" class="col-sm-2 control-label">Matrícula</label>
+				<div class="col-sm-4">
+					<input id="matriculaUsuario" type="text" class="form-control" ng-model="vm.usuario.matricula" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="perfilUsuario" class="col-sm-2 control-label">Perfil</label>
+				<div class="col-sm-4">
+					<select id="perfilUsuario" ng-model="vm.usuario.perfil" class="form-control">
+						<option ng-repeat="perfil in vm.perfis" value="{{perfil}}">{{perfil}}</option>
+					</select>	
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
