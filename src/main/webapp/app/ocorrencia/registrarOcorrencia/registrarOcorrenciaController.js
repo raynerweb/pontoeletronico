@@ -2,10 +2,10 @@
 	'use strict';
 
 	angular
-		.module('ocorrenciaControllers', [])
-		.controller('ocorrenciaController', ocorrenciaController);
+		.module('registrarOcorrenciaControllers', [])
+		.controller('registrarOcorrenciaController', registrarOcorrenciaController);
 
-	function ocorrenciaController(usuarioObject) {
+	function registrarOcorrenciaController(usuarioObject) {
 		var vm = this;
 		
 		vm.alerts = [];

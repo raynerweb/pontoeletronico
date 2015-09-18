@@ -1,0 +1,64 @@
+<style>
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+</style>
+<div class="container-fluid"  ng-controller="listarOcorrenciaController as vm" ng-init="vm.iniciar()">
+	<div class="row">
+		<h2>Listar Ocorrências</h2>
+		
+		<alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.fecharAlert($index)">{{alert.msg}}</alert>
+		
+		<form class="form-horizontal" ng-init="vm.iniciarCalendario()">
+			<div class="form-group">
+				<label for="dataRegistro" class="col-sm-2 control-label">Status da Ocorrência</label>
+				<div class="col-sm-6">
+					<div class="btn-group">
+						<label class="btn btn-default" ng-model="vm.statusOcorrencia.abertas" btn-checkbox>Abertas</label>
+						<label class="btn btn-default" ng-model="vm.statusOcorrencia.aceitas" btn-checkbox>Aceitas</label>
+						<label class="btn btn-default" ng-model="vm.statusOcorrencia.rejeitadas" btn-checkbox>Rejeitadas</label>
+						retirar --> {{vm.statusOcorrencia}}
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="dataRegistro" class="col-sm-2 control-label">Data inicial</label>
+				<div class="col-sm-2">
+					<p class="input-group">
+						<input type="text" class="form-control" id="dataRegistro"
+							datepicker-popup="{{vm.calendarioFormat}}" ng-model="vm.calendarioInicial.data" current-text="Hoje" clear-text="Limpar" close-text="Fechar"
+							is-open="vm.calendarioInicial.isOpen" max-date="vm.calendarioInicial.maxDate" ng-required="true" close-text="Close" ng-disabled="true"/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="vm.mostrarCalendarioInicial($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="dataRegistro" class="col-sm-2 control-label">Data final</label>
+				<div class="col-sm-2">
+					<p class="input-group">
+						<input type="text" class="form-control" id="dataRegistro"
+							datepicker-popup="{{vm.calendarioFormat}}" ng-model="vm.calendarioFinal.data" current-text="Hoje" clear-text="Limpar" close-text="Fechar"
+							is-open="vm.calendarioFinal.isOpen" max-date="vm.calendarioFinal.maxDate" ng-required="true" close-text="Close" ng-disabled="true"/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="vm.mostrarCalendarioFinal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary" ng-click="vm.listarOcorrencias()">Pesquisar</button>Verificar a necessidade. A intenção é que a pesquisa ocorra a cada alteracao do formulario
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

@@ -14,7 +14,8 @@
 			'painelControllers',
 			'pontoControllers',
 			'pontoServices',
-			'ocorrenciaControllers',
+			'registrarOcorrenciaControllers',
+			'listarOcorrenciaControllers',
 			'usuarioObjects'
 
 		])

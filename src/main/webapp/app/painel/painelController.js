@@ -23,8 +23,8 @@
 
 			var ponto = {titulo : 'Ponto', template : 'app/ponto/ponto.html', active: true, disabled: false};
 			var ocorrencia = {titulo : 'Ocorrências', active: false, disabled: false};
-			var listarOcorrencia = {titulo : 'Listar Ocorrência', template : 'app/ocorrencia/listarOcorrencia.html', active: true, disabled: false};
-			var novaOcorrencia   = {titulo : 'Nova Ocorrência', template : 'app/ocorrencia/novaOcorrencia.html', active: false, disabled: false};
+			var listarOcorrencia = {titulo : 'Listar Ocorrência', template : 'app/ocorrencia/listarOcorrencia/listarOcorrencia.html', active: true, disabled: false};
+			var novaOcorrencia   = {titulo : 'Nova Ocorrência', template : 'app/ocorrencia/registrarOcorrencia/registrarOcorrencia.html', active: false, disabled: false};
 			ocorrencia.filhos = [];
 			ocorrencia.filhos.push(listarOcorrencia);
 			ocorrencia.filhos.push(novaOcorrencia);
