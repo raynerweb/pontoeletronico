@@ -16,6 +16,7 @@
 			'pontoServices',
 			'registrarOcorrenciaControllers',
 			'listarOcorrenciaControllers',
+			'ocorrenciaServices',
 			'usuarioObjects'
 
 		])
