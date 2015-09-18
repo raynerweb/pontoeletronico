@@ -5,37 +5,50 @@
 		.module('ocorrenciaControllers', [])
 		.controller('ocorrenciaController', ocorrenciaController);
 
-	function ocorrenciaController() {
+	function ocorrenciaController(usuarioObject) {
 		var vm = this;
-
-		vm.template = 'app/ocorrencia/listarOcorrencia.html';
-		vm.menus = [];
+		
+		vm.alerts = [];
+		vm.justificativa = '';
+		
+		vm.iniciar = iniciar;
+		vm.iniciarCalendario = iniciarCalendario;
+		vm.mostrarCalendario = mostrarCalendario;
+		vm.fecharAlert = fecharAlert;
 		
 		function iniciar(){
 			var usuario = usuarioObject.recuperar();
 			if (objectUtils.isEmpty(usuario)){
 //				$location.path('/login');
 			}
-
-			var listarOcorrencia = {titulo : 'Listar Ocorrência', template : 'app/ocorrencia/listarOcorrencia.html', active: true, disabled: false};
-			var novaOcorrencia   = {titulo : 'Nova Ocorrência', template : 'app/ocorrencia/novaOcorrencia.html', active: false, disabled: false};
 			
-			vm.menus.push(listarOcorrencia);
-			vm.menus.push(novaOcorrencia);
-
-//			alterarView(ponto);
-		}
-
-		function alterarView(menu){
-			vm.template = menu.template;
-			angular.forEach(vm.menus, function(itemMenu){
-				itemMenu.active = false;
-			});
-			menu.active = true;
+			recuperarPonto(new Date());
 		}
 		
-		function logout(){
-			loginService.logout();
+		function iniciarCalendario(){
+			vm.calendario = {};
+			vm.calendario.data = new Date();
+			vm.calendario.maxDate = new Date();
+			vm.calendario.isOpen = false;
+			vm.calendario.format = "dd/MM/yyyy";
+		}
+		
+		function mostrarCalendario($event){
+			vm.calendario.isOpen = true;
+		}
+		
+		function registrarOcorrencia(){
+			console.log('chamar ocorrenciaService.registrarOcorrencia()');
+		}
+		
+		function recuperarPonto(data){
+			console.log('chamar ocorrenciaService.recuperarPonto(usuario, new Date().getTime())');
+			vm.alerts.push({type:'warning', msg : 'Não há registro de ponto no dia!'});
+			
+		}
+		
+		function fecharAlert(index){
+			vm.alerts.splice(index, 1);
 		}
 
 	}

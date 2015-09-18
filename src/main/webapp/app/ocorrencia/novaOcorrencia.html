@@ -1,1 +1,46 @@
-novaOcorrencia
+<style>
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+</style>
+<div class="container-fluid"  ng-controller="ocorrenciaController as vm" ng-init="vm.iniciar()">
+	<div class="row">
+		<h2>Registrar Ocorrência</h2>
+		
+		<alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.fecharAlert($index)">{{alert.msg}}</alert>
+		
+		<form class="form-horizontal" ng-init="vm.iniciarCalendario()">
+			<div class="form-group">
+				<label for="dataRegistro" class="col-sm-2 control-label">Data Registro de ponto</label>
+				<div class="col-sm-2">
+					<p class="input-group">
+						<input type="text" class="form-control" id="dataRegistro"
+							datepicker-popup="{{vm.calendario.format}}" ng-model="vm.calendario.data" current-text="Hoje" clear-text="Limpar" close-text="Fechar"
+							is-open="vm.calendario.isOpen" max-date="vm.calendario.maxDate" ng-required="true" close-text="Close" ng-disabled="true"/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="vm.mostrarCalendario($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="justificativa" class="col-sm-2 control-label">Justificativa</label>
+				<div class="col-sm-6">
+					<textarea class="form-control" rows="7" ng-model="vm.justificativa"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary" ng-click="vm.registrarOcorrencia()">Resgistrar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
