@@ -2,6 +2,8 @@ package br.com.pontoeletronico.dominio;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +29,9 @@ public class Ocorrencia {
 
 	@Column(nullable = false)
 	private String justificativa;
+	
+	@Enumerated(EnumType.STRING)
+	private StatusOcorrencia statusOcorrencia;
 
 	public Long getId() {
 		return id;
@@ -58,6 +63,14 @@ public class Ocorrencia {
 
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
+	}
+
+	public StatusOcorrencia getStatusOcorrencia() {
+		return statusOcorrencia;
+	}
+
+	public void setStatusOcorrencia(StatusOcorrencia statusOcorrencia) {
+		this.statusOcorrencia = statusOcorrencia;
 	}
 
 }
