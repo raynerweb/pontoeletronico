@@ -22,15 +22,22 @@
 			}
 
 			var ponto = {titulo : 'Ponto', template : 'app/ponto/ponto.html', active: true, disabled: false};
-			var ocorrencia = {titulo : 'Ocorrências', active: false, disabled: false};
-			var listarOcorrencia = {titulo : 'Listar Ocorrência', template : 'app/ocorrencia/listarOcorrencia/listarOcorrencia.html', active: true, disabled: false};
-			var novaOcorrencia   = {titulo : 'Nova Ocorrência', template : 'app/ocorrencia/registrarOcorrencia/registrarOcorrencia.html', active: false, disabled: false};
-			ocorrencia.filhos = [];
+			
+			var menuUsuario = {titulo : 'Usuários', active: false, disabled: false, filhos : []};
+			var listarUsuarios = {titulo : 'Listar Usuários', template : 'app/usuario/listarUsuario/listarUsuario.html', active: false, disabled: false};
+			var cadastrarUsuario = {titulo : 'Cadastrar Usuários', template : 'app/usuario/cadastrarUsuario/cadastrarUsuario.html', active: false, disabled: false};
+			menuUsuario.filhos.push(listarUsuarios);
+			menuUsuario.filhos.push(cadastrarUsuario);
+
+			var ocorrencia = {titulo : 'Ocorrências', active: false, disabled: false, filhos : []};
+			var listarOcorrencia = {titulo : 'Listar Ocorrências', template : 'app/ocorrencia/listarOcorrencia/listarOcorrencia.html', active: false, disabled: false};
+			var novaOcorrencia   = {titulo : 'Nova Ocorrências', template : 'app/ocorrencia/registrarOcorrencia/registrarOcorrencia.html', active: false, disabled: false};
 			ocorrencia.filhos.push(listarOcorrencia);
 			ocorrencia.filhos.push(novaOcorrencia);
 			
 			vm.menus.push(ponto);
 			vm.menus.push(ocorrencia);
+			vm.menus.push(menuUsuario);
 
 			alterarView(ponto);
 		}
