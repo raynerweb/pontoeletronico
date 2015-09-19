@@ -19,10 +19,23 @@
 			</div>
 			<div class="form-group">
 				<label for="perfilUsuario" class="col-sm-2 control-label">Perfil</label>
-				<div class="col-sm-4">
-					<select id="perfilUsuario" ng-model="vm.usuario.perfil" class="form-control">
+				<div class="col-sm-2">
+					<select id="perfilUsuario" ng-model="vm.usuario.perfil" class="form-control" required>
 						<option ng-repeat="perfil in vm.perfis" value="{{perfil}}">{{perfil}}</option>
 					</select>	
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="statusUsuario" class="col-sm-2 control-label">Status</label>
+				<div class="col-sm-2">
+					<select id="statusUsuario" ng-model="vm.usuario.status" class="form-control" required>
+						<option ng-repeat="status in vm.statusUsuario" value="{{status}}">{{status}}</option>
+					</select>	
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary" ng-click="vm.cadastrarUsuario()">Cadastrar</button>
 				</div>
 			</div>
 		</form>

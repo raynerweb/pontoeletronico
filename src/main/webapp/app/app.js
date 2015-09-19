@@ -10,6 +10,7 @@
 			//app
 			'constants',
 			'perfilServices',
+			'statusUsuarioServices',
 			'loginControllers',
 			'loginServices',
 			'painelControllers',

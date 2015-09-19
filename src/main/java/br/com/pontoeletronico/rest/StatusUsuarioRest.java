@@ -6,16 +6,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import br.com.pontoeletronico.dominio.Perfil;
+import br.com.pontoeletronico.dominio.Status;
 
-@Path("/perfil")
+@Path("/status-usuario")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class PerfilRest {
+public class StatusUsuarioRest {
 
 	@GET
-	public Perfil[] recuperarPerfis(){
-		return Perfil.values();
+	public Status[] recuperarStatusUsuario() {
+		return Status.values();
 	}
-	
+
 }
