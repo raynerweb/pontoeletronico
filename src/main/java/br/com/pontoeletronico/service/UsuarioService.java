@@ -21,14 +21,10 @@ public class UsuarioService {
 	private UsuarioRepository usuarioRepository;
 
 	public List<Usuario> recuperarPorStatusEPerfil(String siglaStatus, String siglaPerfil) {
-		Status[] status = Status.values();
-		if (siglaStatus != null) {
-			status = new Status[] { Status.getStatus(siglaStatus) };
-		}
-		Perfil[] perfis = Perfil.getPerfis();
-		if (siglaPerfil != null) {
-			perfis = new Perfil[] { Perfil.getPerfil(siglaPerfil) };
-		}
+		Status[] status = Status.getStatus(siglaStatus) == null ? Status.values()
+				: new Status[] { Status.getStatus(siglaStatus) };
+		Perfil[] perfis = Perfil.getPerfil(siglaPerfil) == null ? Perfil.getPerfis()
+				: new Perfil[] { Perfil.getPerfil(siglaPerfil) };
 		return usuarioRepository.findByStatusInAndPerfilIn(status, perfis);
 	}
 
