@@ -1,4 +1,4 @@
-package br.com.pontoeletronico.test.service;
+package br.com.pontoeletronico.service;
 
 import java.util.Date;
 
@@ -7,13 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.pontoeletronico.AbstractTest;
 import br.com.pontoeletronico.dominio.Ponto;
 import br.com.pontoeletronico.dominio.Usuario;
 import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.repository.PontoRepository;
 import br.com.pontoeletronico.repository.UsuarioRepository;
 import br.com.pontoeletronico.service.PontoService;
-import br.com.pontoeletronico.test.AbstractTest;
 
 public class PontoServiceTest extends AbstractTest {
 

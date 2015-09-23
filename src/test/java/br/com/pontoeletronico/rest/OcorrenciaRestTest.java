@@ -1,14 +1,14 @@
-package br.com.pontoeletronico.test.rest;
+package br.com.pontoeletronico.rest;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import br.com.pontoeletronico.RestTest;
 import br.com.pontoeletronico.dominio.Ocorrencia;
 import br.com.pontoeletronico.dominio.StatusOcorrencia;
 import br.com.pontoeletronico.exception.NegocioException;
-import br.com.pontoeletronico.test.RestTest;
 
 public class OcorrenciaRestTest extends RestTest {
 

@@ -1,4 +1,4 @@
-package br.com.pontoeletronico.test;
+package br.com.pontoeletronico;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;

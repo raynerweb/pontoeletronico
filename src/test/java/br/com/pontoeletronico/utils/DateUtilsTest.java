@@ -1,4 +1,4 @@
-package br.com.pontoeletronico.test.utils;
+package br.com.pontoeletronico.utils;
 
 import java.time.Instant;
 import java.time.LocalDate;

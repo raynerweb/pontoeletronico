@@ -1,4 +1,4 @@
-package br.com.pontoeletronico.test.rest;
+package br.com.pontoeletronico.rest;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import br.com.pontoeletronico.RestTest;
 import br.com.pontoeletronico.dominio.Usuario;
 import br.com.pontoeletronico.repository.UsuarioRepository;
-import br.com.pontoeletronico.test.RestTest;
 import br.com.pontoeletronico.utils.JsonUtils;
 
 public class LoginRestTest extends RestTest {

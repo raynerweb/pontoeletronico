@@ -1,9 +1,9 @@
-package br.com.pontoeletronico.test.rest;
+package br.com.pontoeletronico.rest;
 
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
-import br.com.pontoeletronico.test.RestTest;
+import br.com.pontoeletronico.RestTest;
 
 public class UsuarioRestTest extends RestTest {
 

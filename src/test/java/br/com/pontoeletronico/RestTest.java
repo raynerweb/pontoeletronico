@@ -1,4 +1,4 @@
-package br.com.pontoeletronico.test;
+package br.com.pontoeletronico;
 
 import java.util.HashMap;
 import java.util.Map;

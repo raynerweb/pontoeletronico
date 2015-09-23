@@ -1,4 +1,4 @@
-package br.com.pontoeletronico.test.utils;
+package br.com.pontoeletronico.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
