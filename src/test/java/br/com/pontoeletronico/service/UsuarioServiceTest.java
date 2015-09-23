@@ -118,8 +118,7 @@ public class UsuarioServiceTest extends AbstractTest {
 
 	@Test
 	public void recuperarPeloUsuario() {
-		List<Usuario> usuarios = usuarioService.recuperarUsuarioPorAtributos(null, null, Status.ATIVO.getSigla(),
-				Perfil.ROOT.getSigla());
+		List<Usuario> usuarios = usuarioService.recuperarPorStatusEPerfil(Status.ATIVO.getSigla(), Perfil.OPERADOR.getSigla());
 		Assert.assertNotNull(usuarios);
 		Assert.assertFalse(usuarios.isEmpty());
 	}

@@ -91,8 +91,8 @@ public class UsuarioRest {
 
 	@Path("/recuperar-usuario")
 	@GET
-	public List<Usuario> recuperarUsuarios(@QueryParam("matricula") String matricula, @QueryParam("nome") String nome,
-			@QueryParam("status") String siglaStatus, @QueryParam("perfil") String siglaPerfil) {
-		return service.recuperarUsuarioPorAtributos(matricula, nome, siglaStatus, siglaPerfil);
+	public List<Usuario> recuperarUsuarios(@QueryParam("status") String siglaStatus,
+			@QueryParam("perfil") String siglaPerfil) {
+		return service.recuperarPorStatusEPerfil(siglaStatus, siglaPerfil);
 	}
 }

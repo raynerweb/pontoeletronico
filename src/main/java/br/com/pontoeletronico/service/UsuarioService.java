@@ -20,14 +20,7 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	public List<Usuario> recuperarUsuarioPorAtributos(String matricula, String nome, String siglaStatus,
-			String siglaPerfil) {
-		if (nome == null) {
-			nome = "";
-		}
-		if (matricula == null) {
-			matricula = "";
-		}
+	public List<Usuario> recuperarPorStatusEPerfil(String siglaStatus, String siglaPerfil) {
 		Status[] status = Status.values();
 		if (siglaStatus != null) {
 			status = new Status[] { Status.getStatus(siglaStatus) };
@@ -36,8 +29,7 @@ public class UsuarioService {
 		if (siglaPerfil != null) {
 			perfis = new Perfil[] { Perfil.getPerfil(siglaPerfil) };
 		}
-		return usuarioRepository.findByMatriculaAndNomeContainingAndStatusInAndPerfilIn(matricula, nome, status,
-				perfis);
+		return usuarioRepository.findByStatusInAndPerfilIn(status, perfis);
 	}
 
 	public Usuario realizarLogin(Usuario usuario) {
