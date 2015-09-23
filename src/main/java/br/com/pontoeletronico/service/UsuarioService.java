@@ -21,9 +21,9 @@ public class UsuarioService {
 	private UsuarioRepository usuarioRepository;
 
 	public List<Usuario> recuperarPorStatusEPerfil(String siglaStatus, String siglaPerfil) {
-		Status[] status = Status.getStatus(siglaStatus) == null ? Status.values()
+		Status[] status = StringUtils.isBlank(siglaStatus) || Status.getStatus(siglaStatus) == null ? Status.values()
 				: new Status[] { Status.getStatus(siglaStatus) };
-		Perfil[] perfis = Perfil.getPerfil(siglaPerfil) == null ? Perfil.getPerfis()
+		Perfil[] perfis = StringUtils.isBlank(siglaPerfil) || Perfil.getPerfil(siglaPerfil) == null ? Perfil.getPerfis()
 				: new Perfil[] { Perfil.getPerfil(siglaPerfil) };
 		return usuarioRepository.findByStatusInAndPerfilIn(status, perfis);
 	}
