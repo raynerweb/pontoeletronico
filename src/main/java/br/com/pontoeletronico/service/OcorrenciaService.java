@@ -27,7 +27,7 @@ public class OcorrenciaService {
 	public List<Ocorrencia> consultarStatusOcorrenciaUsuarioId(
 			Ocorrencia ocorrencia) throws NegocioException {
 		return getOcorrenciaRepository().findByStatusOcorrenciaAndUsuarioId(
-				ocorrencia.getStatusOcorrencia(), ocorrencia.getId());
+				ocorrencia.getStatusOcorrencia(), ocorrencia.getUsuario().getId());
 	}
 	
 	public List<Ocorrencia> consultarUsuarioId(Long usuarioId) 
