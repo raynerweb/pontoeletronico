@@ -13,7 +13,6 @@ import br.com.pontoeletronico.dominio.Usuario;
 import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.repository.PontoRepository;
 import br.com.pontoeletronico.repository.UsuarioRepository;
-import br.com.pontoeletronico.utils.DateUtils;
 
 @Service
 public class PontoService {
@@ -33,7 +32,7 @@ public class PontoService {
 		if (ponto == null) {
 			ponto = novoRegistroDePonto(idUsuario, dataRegistro);
 		}
-		ponto.registraProximoPonto(DateUtils.toLocalTime(dataRegistro));
+		ponto.registraProximoPonto(dataRegistro);
 		pontoRepository.save(ponto);
 		return ponto;
 	}
@@ -60,7 +59,7 @@ public class PontoService {
 	}
 
 	private Ponto recuperarPorDataRegistroIdUsuario(Long idUsuario, Date dataRegistro) {
-		return pontoRepository.findByDataRegistroAndUsuarioId(DateUtils.toLocalDate(dataRegistro), idUsuario);
+		return pontoRepository.findByDataRegistroAndUsuarioId(dataRegistro, idUsuario);
 	}
 
 	private Ponto novoRegistroDePonto(Long idUsuario, Date dataRegistro) {
@@ -68,7 +67,7 @@ public class PontoService {
 		Usuario usuario = new Usuario();
 		usuario.setId(idUsuario);
 		ponto.setUsuario(usuario);
-		ponto.setDataRegistro(DateUtils.toLocalDate(dataRegistro));
+		ponto.setDataRegistro(dataRegistro);
 		return ponto;
 	}
 

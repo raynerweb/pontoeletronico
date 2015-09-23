@@ -1,18 +1,35 @@
 package br.com.pontoeletronico.rest;
 
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.pontoeletronico.RestTest;
 import br.com.pontoeletronico.dominio.Ocorrencia;
+import br.com.pontoeletronico.dominio.Ponto;
 import br.com.pontoeletronico.dominio.StatusOcorrencia;
+import br.com.pontoeletronico.dominio.Usuario;
+import br.com.pontoeletronico.repository.PontoRepository;
+import br.com.pontoeletronico.repository.UsuarioRepository;
+import br.com.pontoeletronico.service.PontoService;
 
 public class OcorrenciaRestTest extends RestTest {
 
+	@Autowired
+	private PontoRepository pontoRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	private Long idUsuario = 1l;
+	
+	
 	@Test
 	public void consultarStatusOcorrenciaSucesso() {
 		UriComponentsBuilder builder = UriComponentsBuilder
@@ -52,12 +69,16 @@ public class OcorrenciaRestTest extends RestTest {
 	}
 
 	@Test
-	@Ignore
 	public void registrarOcorrencia() {
+		
+		Usuario usuario = usuarioRepository.findOne(idUsuario);
+		Ponto pontoRegistrado = pontoRepository.findOne(1l);
+		
 		Ocorrencia ocorrencia = new Ocorrencia();
-		ocorrencia.setId(4444L);
 		ocorrencia.setJustificativa("Motivos pessoais familiares");
 		ocorrencia.setStatusOcorrencia(StatusOcorrencia.ACEITO);
+		ocorrencia.setUsuario(usuario);
+		ocorrencia.setPonto(pontoRegistrado);
 
 		ResponseEntity<String> resposta = rest
 				.postForEntity("http://localhost:8080/rest/ocorrencia/registrarOcorrencia", ocorrencia, String.class);

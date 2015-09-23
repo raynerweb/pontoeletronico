@@ -1,7 +1,6 @@
 package br.com.pontoeletronico.dominio;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import br.com.pontoeletronico.exception.NegocioException;
@@ -30,25 +31,32 @@ public class Ponto {
 	private Usuario usuario;
 
 	@Column(nullable = false)
-	private LocalDate dataRegistro;
+	@Temporal(TemporalType.DATE)
+	private Date dataRegistro;
 
 	@Column(nullable = false)
-	private LocalTime entradaPrimeiroTurno;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date entradaPrimeiroTurno;
 
 	@Column
-	private LocalTime saidaPrimeiroTurno;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date saidaPrimeiroTurno;
 
 	@Column
-	private LocalTime entradaSegundoTurno;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date entradaSegundoTurno;
 
 	@Column
-	private LocalTime saidaSegundoTurno;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date saidaSegundoTurno;
 
 	@Column
-	private LocalTime entradaTerceiroTurno;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date entradaTerceiroTurno;
 
 	@Column
-	private LocalTime saidaTerceiroTurno;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date saidaTerceiroTurno;
 
 	@Column(nullable = false)
 	private boolean permitidoHoraExtra;
@@ -69,59 +77,59 @@ public class Ponto {
 		this.usuario = usuario;
 	}
 
-	public LocalDate getDataRegistro() {
+	public Date getDataRegistro() {
 		return dataRegistro;
 	}
 
-	public void setDataRegistro(LocalDate dataRegistro) {
+	public void setDataRegistro(Date dataRegistro) {
 		this.dataRegistro = dataRegistro;
 	}
 
-	public LocalTime getEntradaPrimeiroTurno() {
+	public Date getEntradaPrimeiroTurno() {
 		return entradaPrimeiroTurno;
 	}
 
-	public void setEntradaPrimeiroTurno(LocalTime entradaPrimeiroTurno) {
+	public void setEntradaPrimeiroTurno(Date entradaPrimeiroTurno) {
 		this.entradaPrimeiroTurno = entradaPrimeiroTurno;
 	}
 
-	public LocalTime getSaidaPrimeiroTurno() {
+	public Date getSaidaPrimeiroTurno() {
 		return saidaPrimeiroTurno;
 	}
 
-	public void setSaidaPrimeiroTurno(LocalTime saidaPrimeiroTurno) {
+	public void setSaidaPrimeiroTurno(Date saidaPrimeiroTurno) {
 		this.saidaPrimeiroTurno = saidaPrimeiroTurno;
 	}
 
-	public LocalTime getEntradaSegundoTurno() {
+	public Date getEntradaSegundoTurno() {
 		return entradaSegundoTurno;
 	}
 
-	public void setEntradaSegundoTurno(LocalTime entradaSegundoTurno) {
+	public void setEntradaSegundoTurno(Date entradaSegundoTurno) {
 		this.entradaSegundoTurno = entradaSegundoTurno;
 	}
 
-	public LocalTime getSaidaSegundoTurno() {
+	public Date getSaidaSegundoTurno() {
 		return saidaSegundoTurno;
 	}
 
-	public void setSaidaSegundoTurno(LocalTime saidaSegundoTurno) {
+	public void setSaidaSegundoTurno(Date saidaSegundoTurno) {
 		this.saidaSegundoTurno = saidaSegundoTurno;
 	}
 
-	public LocalTime getEntradaTerceiroTurno() {
+	public Date getEntradaTerceiroTurno() {
 		return entradaTerceiroTurno;
 	}
 
-	public void setEntradaTerceiroTurno(LocalTime entradaTerceiroTurno) {
+	public void setEntradaTerceiroTurno(Date entradaTerceiroTurno) {
 		this.entradaTerceiroTurno = entradaTerceiroTurno;
 	}
 
-	public LocalTime getSaidaTerceiroTurno() {
+	public Date getSaidaTerceiroTurno() {
 		return saidaTerceiroTurno;
 	}
 
-	public void setSaidaTerceiroTurno(LocalTime saidaTerceiroTurno) {
+	public void setSaidaTerceiroTurno(Date saidaTerceiroTurno) {
 		this.saidaTerceiroTurno = saidaTerceiroTurno;
 	}
 
@@ -133,7 +141,7 @@ public class Ponto {
 		this.permitidoHoraExtra = permitidoHoraExtra;
 	}
 
-	public void registraProximoPonto(LocalTime proximoRegistro) {
+	public void registraProximoPonto(Date proximoRegistro) {
 		if (getEntradaPrimeiroTurno() == null) {
 			setEntradaPrimeiroTurno(proximoRegistro);
 			return;

@@ -15,33 +15,29 @@ public class OcorrenciaService {
 
 	@Autowired
 	private OcorrenciaRepository ocorrenciaRepository;
-	
-	public List<Ocorrencia> consultarStatusOcorrencia(StatusOcorrencia status) 
-			throws NegocioException {
-		if(status != null)
+
+	private OcorrenciaRepository getOcorrenciaRepository() {
+		return ocorrenciaRepository;
+	}
+
+	public List<Ocorrencia> consultarStatusOcorrencia(StatusOcorrencia status) throws NegocioException {
+		if (status != null)
 			return getOcorrenciaRepository().findByStatusOcorrencia(status);
 		else
 			throw new NegocioException("Status Ocorrência não informado");
 	}
-	
-	public List<Ocorrencia> consultarStatusOcorrenciaUsuarioId(
-			Ocorrencia ocorrencia) throws NegocioException {
-		return getOcorrenciaRepository().findByStatusOcorrenciaAndUsuarioId(
-				ocorrencia.getStatusOcorrencia(), ocorrencia.getUsuario().getId());
+
+	public List<Ocorrencia> consultarStatusOcorrenciaUsuarioId(Ocorrencia ocorrencia) throws NegocioException {
+		return getOcorrenciaRepository().findByStatusOcorrenciaAndUsuarioId(ocorrencia.getStatusOcorrencia(),
+				ocorrencia.getUsuario().getId());
 	}
-	
-	public List<Ocorrencia> consultarUsuarioId(Long usuarioId) 
-			throws NegocioException {
+
+	public List<Ocorrencia> consultarUsuarioId(Long usuarioId) throws NegocioException {
 		return getOcorrenciaRepository().findByUsuarioId(usuarioId);
 	}
-	
-	public void registrarOcorrencia(Ocorrencia ocorrencia) 
-			throws NegocioException {
+
+	public void registrarOcorrencia(Ocorrencia ocorrencia) throws NegocioException {
 		getOcorrenciaRepository().save(ocorrencia);
 	}
 
-	public OcorrenciaRepository getOcorrenciaRepository() {
-		return ocorrenciaRepository;
-	}
-	
 }
