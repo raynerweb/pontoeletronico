@@ -26,58 +26,44 @@ public class OcorrenciaRest {
 	@Autowired
 	private OcorrenciaService ocorrenciaService;
 	private Ocorrencia ocorrencia;
-	
+
 	@Path("/consultarStatusOcorrencia")
 	@GET
-	public List<Ocorrencia> consultarStatusOcorrencia(@QueryParam("status") 
-			String status)  throws NegocioException {
-		StatusOcorrencia statusOcorrencia = StatusOcorrencia.valueOf(
-				StatusOcorrencia.getTipoStatus(status));
-		return getOcorrenciaService().consultarStatusOcorrencia(
-				statusOcorrencia);
+	public List<Ocorrencia> consultarStatusOcorrencia(@QueryParam("status") String status) throws NegocioException {
+		StatusOcorrencia statusOcorrencia = StatusOcorrencia.getTipoStatus(status);
+		return getOcorrenciaService().consultarStatusOcorrencia(statusOcorrencia);
 	}
-	
+
 	@Path("/consultarStatusOcorrenciaUsuarioId")
-	public List<Ocorrencia> consultarStatusOcorrenciaUsuarioId(
-			@QueryParam("status") String status, @QueryParam("usuarioId") 
-					Long usuarioId) throws NegocioException {
-		
-		StatusOcorrencia statusOcorrencia = StatusOcorrencia.valueOf(
-				StatusOcorrencia.getTipoStatus(status));
+	public List<Ocorrencia> consultarStatusOcorrenciaUsuarioId(@QueryParam("status") String status,
+			@QueryParam("usuarioId") Long usuarioId) throws NegocioException {
+		StatusOcorrencia statusOcorrencia = StatusOcorrencia.getTipoStatus(status);
 		getOcorrencia().setStatusOcorrencia(statusOcorrencia);
 		getOcorrencia().setId(usuarioId);
-		
-		return getOcorrenciaService().consultarStatusOcorrenciaUsuarioId(
-					getOcorrencia());
+		return getOcorrenciaService().consultarStatusOcorrenciaUsuarioId(getOcorrencia());
 	}
-	
+
 	@Path("/consultarUsuarioId")
 	@GET
-	public List<Ocorrencia> consultarUsuarioId(
-			@QueryParam("usuarioId") Long usuarioId) throws NegocioException {
+	public List<Ocorrencia> consultarUsuarioId(@QueryParam("usuarioId") Long usuarioId) throws NegocioException {
 		return getOcorrenciaService().consultarUsuarioId(usuarioId);
 	}
-	
+
 	@Path("/registrarOcorrencia")
 	@POST
-	public Response registrarOcorrencia(Ocorrencia ocorrencia) 
-			throws NegocioException {
+	public Response registrarOcorrencia(Ocorrencia ocorrencia) throws NegocioException {
 		getOcorrenciaService().registrarOcorrencia(ocorrencia);
 		return Response.ok().build();
 	}
 
-	public OcorrenciaService getOcorrenciaService() {
+	private OcorrenciaService getOcorrenciaService() {
 		return ocorrenciaService;
 	}
 
-	public Ocorrencia getOcorrencia() {
-		if(ocorrencia == null)
+	private Ocorrencia getOcorrencia() {
+		if (ocorrencia == null)
 			ocorrencia = new Ocorrencia();
 		return ocorrencia;
-	}
-
-	public void setOcorrencia(Ocorrencia ocorrencia) {
-		this.ocorrencia = ocorrencia;
 	}
 
 }

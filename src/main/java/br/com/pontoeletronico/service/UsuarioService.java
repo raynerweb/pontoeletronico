@@ -1,6 +1,7 @@
 package br.com.pontoeletronico.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +18,11 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+
+	public List<Usuario> recuperarPeloUsuario(Usuario usuario) {
+		return usuarioRepository.findByMatriculaOrNomeContainingOrStatusOrPerfil(usuario.getMatricula(),
+				usuario.getNome(), usuario.getStatus(), usuario.getPerfil());
+	}
 
 	public Usuario realizarLogin(Usuario usuario) {
 		Usuario usuarioLogado = usuarioRepository.findByMatriculaAndSenha(usuario.getMatricula(), usuario.getSenha());

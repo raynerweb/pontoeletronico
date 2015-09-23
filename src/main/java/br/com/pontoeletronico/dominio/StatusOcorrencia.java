@@ -12,11 +12,11 @@ public enum StatusOcorrencia {
 	public String getSigla() {
 		return this.sigla;
 	}
-	
-	public static String getTipoStatus(String sigla){
+
+	public static StatusOcorrencia getTipoStatus(String sigla) {
 		for (StatusOcorrencia status : StatusOcorrencia.values()) {
-			if(status.getSigla().equals(sigla))
-				return status.getSigla();
+			if (status.getSigla().equals(sigla))
+				return status;
 		}
 		return null;
 	}
