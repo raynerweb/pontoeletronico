@@ -39,6 +39,7 @@ public class PontoServiceTest extends AbstractTest {
 	public void registrarPontoSucesso() {
 		Ponto novoPonto = getPontoService().registrarPonto(idUsuario, new Date(), usuario);
 		Assert.assertNotNull(novoPonto);
+		Assert.assertNotNull(novoPonto.getId());
 	}
 
 	@Test(expected = NegocioException.class)
@@ -48,8 +49,11 @@ public class PontoServiceTest extends AbstractTest {
 
 	@Test
 	public void recuperarPorDataRegistroIdUsuario() {
-		Ponto ponto = getPontoService().recuperarPonto(new Long(1), new Date(), usuario);
-		Assert.assertNull(ponto);
+		Ponto ponto = getPontoService().registrarPonto(idUsuario, new Date(), usuario);
+		Ponto pontoRegistrado = getPontoService().recuperarPonto(idUsuario, new Date(), usuario);
+		Assert.assertNotNull(pontoRegistrado);
+		Assert.assertNotNull(pontoRegistrado.getId());
+		Assert.assertEquals(ponto.getId(), pontoRegistrado.getId());
 	}
 
 	public PontoRepository getPontoRepository() {
