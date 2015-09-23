@@ -15,7 +15,7 @@ public class PerfilRest {
 
 	@GET
 	public Perfil[] recuperarPerfis(){
-		return Perfil.values();
+		return Perfil.getPerfis();
 	}
 	
 }

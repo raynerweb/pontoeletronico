@@ -1,5 +1,7 @@
 package br.com.pontoeletronico.rest;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -28,7 +30,7 @@ public class UsuarioRest {
 
 	@Context
 	private HttpServletRequest request;
-	
+
 	private Perfil perfil = Perfil.ROOT;
 
 	@Path("/cadastrar")
@@ -85,5 +87,12 @@ public class UsuarioRest {
 			service.limparSenha(idUsuario);
 		}
 		return "OK";
+	}
+
+	@Path("/recuperar-usuario")
+	@GET
+	public List<Usuario> recuperarUsuarios(@QueryParam("matricula") String matricula, @QueryParam("nome") String nome,
+			@QueryParam("status") String siglaStatus, @QueryParam("perfil") String siglaPerfil) {
+		return service.recuperarUsuarioPorAtributos(matricula, nome, siglaStatus, siglaPerfil);
 	}
 }

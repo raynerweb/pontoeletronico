@@ -14,6 +14,6 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
 	Usuario findByMatriculaAndSenha(String matricula, String senha);
 	
-	List<Usuario> findByMatriculaOrNomeContainingOrStatusOrPerfil(String matricula, String nome, Status status, Perfil perfil);
+	List<Usuario> findByMatriculaAndNomeContainingAndStatusInAndPerfilIn(String matricula, String nome, Status[] status, Perfil[] perfil);
 	
 }

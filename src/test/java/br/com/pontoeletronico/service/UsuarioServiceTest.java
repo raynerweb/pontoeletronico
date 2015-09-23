@@ -1,5 +1,7 @@
 package br.com.pontoeletronico.service;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,7 +14,6 @@ import br.com.pontoeletronico.dominio.Status;
 import br.com.pontoeletronico.dominio.Usuario;
 import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.repository.UsuarioRepository;
-import br.com.pontoeletronico.service.UsuarioService;
 
 public class UsuarioServiceTest extends AbstractTest {
 
@@ -113,6 +114,14 @@ public class UsuarioServiceTest extends AbstractTest {
 		usuarioService.ativarUsuario(usuario.getId());
 		usuario = repositorio.findOne(usuario.getId());
 		Assert.assertEquals(Status.ATIVO, usuario.getStatus());
+	}
+
+	@Test
+	public void recuperarPeloUsuario() {
+		List<Usuario> usuarios = usuarioService.recuperarUsuarioPorAtributos(null, null, Status.ATIVO.getSigla(),
+				Perfil.ROOT.getSigla());
+		Assert.assertNotNull(usuarios);
+		Assert.assertFalse(usuarios.isEmpty());
 	}
 
 }

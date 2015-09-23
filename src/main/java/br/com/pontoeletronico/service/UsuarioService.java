@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.pontoeletronico.dominio.Perfil;
 import br.com.pontoeletronico.dominio.Status;
 import br.com.pontoeletronico.dominio.Usuario;
 import br.com.pontoeletronico.exception.NegocioException;
@@ -19,9 +20,24 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	public List<Usuario> recuperarPeloUsuario(Usuario usuario) {
-		return usuarioRepository.findByMatriculaOrNomeContainingOrStatusOrPerfil(usuario.getMatricula(),
-				usuario.getNome(), usuario.getStatus(), usuario.getPerfil());
+	public List<Usuario> recuperarUsuarioPorAtributos(String matricula, String nome, String siglaStatus,
+			String siglaPerfil) {
+		if (nome == null) {
+			nome = "";
+		}
+		if (matricula == null) {
+			matricula = "";
+		}
+		Status[] status = Status.values();
+		if (siglaStatus != null) {
+			status = new Status[] { Status.getStatus(siglaStatus) };
+		}
+		Perfil[] perfis = Perfil.getPerfis();
+		if (siglaPerfil != null) {
+			perfis = new Perfil[] { Perfil.getPerfil(siglaPerfil) };
+		}
+		return usuarioRepository.findByMatriculaAndNomeContainingAndStatusInAndPerfilIn(matricula, nome, status,
+				perfis);
 	}
 
 	public Usuario realizarLogin(Usuario usuario) {
