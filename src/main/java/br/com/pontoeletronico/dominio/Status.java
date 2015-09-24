@@ -12,10 +12,18 @@ public enum Status {
 	public String getSigla() {
 		return this.sigla;
 	}
-	
+
 	public static Status getStatus(String sigla) {
 		for (Status status : Status.values()) {
 			if (status.getSigla().equals(sigla))
+				return status;
+		}
+		return null;
+	}
+
+	public static Status getStatusPeloNome(String nome) {
+		for (Status status : Status.values()) {
+			if (status.name().equals(nome))
 				return status;
 		}
 		return null;

@@ -11,11 +11,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.pontoeletronico.dominio.Perfil;
 import br.com.pontoeletronico.dominio.Usuario;
+import br.com.pontoeletronico.dto.UsuarioDTO;
 import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.service.UsuarioService;
 import br.com.pontoeletronico.utils.SessaoUtils;
@@ -34,59 +36,28 @@ public class UsuarioRest {
 	private Perfil perfil = Perfil.ROOT;
 
 	@Path("/cadastrar")
-	@Produces(MediaType.TEXT_PLAIN)
 	@POST
 	public Usuario cadastrar(Usuario usuario) throws NegocioException {
 		service.realizarCadastroUsuario(usuario);
 		return usuario;
 	}
 
-	/**
-	 * @param idUsuario
-	 * @return "OK" quando realizado com sucesso e "ERROR" quando ouver algum
-	 *         erro
-	 */
-	@Path("/inativar")
-	@Produces(MediaType.TEXT_PLAIN)
-	@GET
-	public String inativarUsuario(@QueryParam("idUsuario") Long idUsuario) {
-		Usuario usuario = SessaoUtils.getUsuarioLogado(request);
-		if (usuario.isAutorizado(perfil)) {
-			service.inativarUsuario(idUsuario);
-		}
-		return "OK";
+	@Path("/atualizar-usuario")
+	@POST
+	public Response atualizarUsuario(UsuarioDTO usuarioDto) {
+		Usuario usuario = usuarioDto.toUsuario();
+		service.atualizarUsuario(usuario);
+		return Response.ok(usuario).build();
 	}
 
-	/**
-	 * @param idUsuario
-	 * @return "OK" quando realizado com sucesso e "ERROR" quando ouver algum
-	 *         erro
-	 */
-	@Path("/ativar")
-	@Produces(MediaType.TEXT_PLAIN)
-	@GET
-	public String ativarUsuario(@QueryParam("idUsuario") Long idUsuario) {
-		Usuario usuario = SessaoUtils.getUsuarioLogado(request);
-		if (usuario.isAutorizado(perfil)) {
-			service.ativarUsuario(idUsuario);
-		}
-		return "OK";
-	}
-
-	/**
-	 * @param idUsuario
-	 * @return "OK" quando realizado com sucesso e "ERROR" quando ouver algum
-	 *         erro
-	 */
 	@Path("/limpar-senha")
-	@Produces(MediaType.TEXT_PLAIN)
 	@GET
-	public String limparSenha(@QueryParam("idUsuario") Long idUsuario) {
+	public Response limparSenha(@QueryParam("idUsuario") Long idUsuario) {
 		Usuario usuario = SessaoUtils.getUsuarioLogado(request);
 		if (usuario.isAutorizado(perfil)) {
 			service.limparSenha(idUsuario);
 		}
-		return "OK";
+		return Response.ok().build();
 	}
 
 	@Path("/recuperar-usuario")
@@ -95,4 +66,5 @@ public class UsuarioRest {
 			@QueryParam("perfil") String siglaPerfil) {
 		return service.recuperarPorStatusEPerfil(siglaStatus, siglaPerfil);
 	}
+
 }

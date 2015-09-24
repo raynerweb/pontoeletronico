@@ -12,7 +12,7 @@
 		}
 		
 		function recuperarStatusUsuario(){
-			return $http.get(CONTEXTO + '/status-usuario').then(function(response){ return response}, errorCallback);
+			return $http.get(CONTEXTO + '/status-usuario').then(function(response){ return response.data}, errorCallback);
 		}
 
 		function errorCallback(response) {

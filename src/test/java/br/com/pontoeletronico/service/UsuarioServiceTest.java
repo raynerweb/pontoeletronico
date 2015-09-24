@@ -50,7 +50,7 @@ public class UsuarioServiceTest extends AbstractTest {
 
 	@Test(expected = NegocioException.class)
 	public void statusNaoInformado() {
-		usuario.setStatus(null);
+		usuario.setStatus("");
 		usuarioService.armazenarUsuario(usuario);
 	}
 
@@ -70,7 +70,7 @@ public class UsuarioServiceTest extends AbstractTest {
 
 	@Test(expected = NegocioException.class)
 	public void perfilNaoInformado() {
-		usuario.setPerfil(null);
+		usuario.setPerfil("");
 		usuarioService.armazenarUsuario(usuario);
 		Assert.assertNotNull(usuario.getId());
 	}
@@ -97,8 +97,10 @@ public class UsuarioServiceTest extends AbstractTest {
 		usuario.setStatus(Status.ATIVO);
 		usuarioService.armazenarUsuario(usuario);
 		Assert.assertNotNull(usuario.getId());
-		usuario = repositorio.findOne(usuario.getId());
-		usuarioService.inativarUsuario(usuario.getId());
+
+		usuario.setStatus(Status.INATIVO);
+		usuarioService.atualizarUsuario(usuario);
+
 		usuario = repositorio.findOne(usuario.getId());
 		Assert.assertEquals(Status.INATIVO, usuario.getStatus());
 	}
@@ -107,18 +109,17 @@ public class UsuarioServiceTest extends AbstractTest {
 	public void ativarUsuario() {
 		usuarioService.armazenarUsuario(usuario);
 		Assert.assertNotNull(usuario.getId());
-		usuario = repositorio.findOne(usuario.getId());
-		usuarioService.inativarUsuario(usuario.getId());
-		usuario = repositorio.findOne(usuario.getId());
-		Assert.assertEquals(Status.INATIVO, usuario.getStatus());
-		usuarioService.ativarUsuario(usuario.getId());
+		usuario.setStatus(Status.ATIVO);
+		usuarioService.atualizarUsuario(usuario);
+
 		usuario = repositorio.findOne(usuario.getId());
 		Assert.assertEquals(Status.ATIVO, usuario.getStatus());
 	}
 
 	@Test
 	public void recuperarPeloUsuario() {
-		List<Usuario> usuarios = usuarioService.recuperarPorStatusEPerfil(Status.ATIVO.getSigla(), Perfil.OPERADOR.getSigla());
+		List<Usuario> usuarios = usuarioService.recuperarPorStatusEPerfil(Status.ATIVO.getSigla(),
+				Perfil.OPERADOR.getSigla());
 		Assert.assertNotNull(usuarios);
 		Assert.assertFalse(usuarios.isEmpty());
 	}

@@ -23,9 +23,9 @@
 						<label for="statusUsuario" class="col-sm-2 control-label">Status do Usuário</label>
 						<div class="col-sm-6">
 							<div class="btn-group">
-								<label class="btn btn-default" ng-model="vm.statusUsuario" btn-radio="'TODOS'">Todos</label>
-								<label class="btn btn-default" ng-model="vm.statusUsuario" btn-radio="'ATIVO'">Ativo</label>
-								<label class="btn btn-default" ng-model="vm.statusUsuario" btn-radio="'INATIVO'">Inativo</label>
+								<label class="btn btn-default capitalize" ng-model="vm.statusUsuario" btn-radio="'TODOS'">{{'TODOS' | lowercase}}</label>
+								<label ng-repeat="statusUsuario in vm.status" class="btn btn-default capitalize" 
+									ng-model="vm.statusUsuario" btn-radio="'{{statusUsuario}}'">{{statusUsuario | lowercase}}</label>
 							</div>
 						</div>
 					</div>
@@ -33,9 +33,9 @@
 						<label for="perfilUsuario" class="col-sm-2 control-label">Perfil do Usuário</label>
 						<div class="col-sm-6">
 							<div class="btn-group">
-								<label class="btn btn-default" ng-model="vm.perfilUsuario" btn-radio="'TODOS'">Todos</label>
-								<label class="btn btn-default" ng-model="vm.perfilUsuario" btn-radio="'SUPERVISOR'">Supervisor</label>
-								<label class="btn btn-default" ng-model="vm.perfilUsuario" btn-radio="'OPERADOR'">Operador</label>
+								<label class="btn btn-default capitalize" ng-model="vm.perfilUsuario" btn-radio="'TODOS'">{{'TODOS' | lowercase}}</label>
+								<label ng-repeat="perfil in vm.perfis" class="btn btn-default capitalize" 
+									ng-model="vm.perfilUsuario" btn-radio="'{{perfil}}'">{{perfil | lowercase}}</label>
 							</div>
 						</div>
 					</div>
@@ -54,24 +54,60 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="text-center">
-					<td>Fulano</td>
-					<td>223344</td>
+				<tr class="text-center" ng-repeat="usuario in vm.usuarios">
+					<td>{{usuario.nome}}</td>
+					<td>{{usuario.matricula}}</td>
 					<td>
 						<div class="btn-group">
-							<button class="btn btn-default btn-xs" ng-click="">Operador</button>
-							<button class="btn btn-default btn-xs" ng-click="">Supervisor</button>
+							<label ng-repeat="perfil in vm.perfis" class="btn btn-default btn-xs capitalize" ng-click="vm.isUsuarioAlterado(usuario)"
+								ng-model="usuario.perfil" btn-radio="'{{perfil}}'">{{perfil | lowercase}}</label>
 						</div>
 					</td>
 					<td>
 						<div class="btn-group">
-							<button class="btn btn-default btn-xs" ng-click="">Ativar</button>
-							<button class="btn btn-default btn-xs" ng-click="">Inativar</button>
+							<label ng-repeat="statusUsuario in vm.status" class="btn btn-default btn-xs capitalize" ng-click="vm.isUsuarioAlterado(usuario)"
+								ng-model="usuario.status" btn-radio="'{{statusUsuario}}'">{{statusUsuario | lowercase}}</label>
 						</div>
 					</td>
 					<td>
+						<button class="btn btn-default btn-xs" ng-model="usuario.isAlterado" ng-click="vm.atualizarUsuario(usuario)" ng-disabled="!usuario.isAlterado">Salvar</button>
+						<button class="btn btn-default btn-xs" ng-click="vm.editarUsuario(usuario)" 
+							data-toggle="modal" data-target="#modalEditarUsuario">Editar</button>
 						<button class="btn btn-default btn-xs" ng-click="">Limpar Senha</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+	</div>
+</div>
+
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Editar Usuário</h4>
+            </div>
+            <div class="modal-body">
+            	<form class="form-horizontal">
+					<div class="form-group">
+						<label for="nomeUsuarioAlteracao" class="col-sm-2 control-label">Nome</label>
+						<div class="col-sm-6">
+							<input id="nomeUsuarioAlteracao" type="text" ng-model="vm.usuarioAlteracao.nome" class="form-control">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="matriculaUsuarioAlteracao" class="col-sm-2 control-label">Matrícula</label>
+						<div class="col-sm-2">
+							<input id="matriculaUsuarioAlteracao" type="text" ng-model="vm.usuarioAlteracao.matricula" class="form-control">
+						</div>
+					</div>
+				</form>
+            </div>
+            <div class="modal-footer">
+            	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.limparFormularioAlteracao()">Fechar</button>
+            	<button type="button" class="btn btn-primary" ng-click="vm.atualizarUsuario(vm.usuarioAlteracao)">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

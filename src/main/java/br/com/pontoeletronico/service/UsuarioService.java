@@ -46,6 +46,13 @@ public class UsuarioService {
 		usuario.setStatus(Status.ATIVO);
 		armazenarUsuario(usuario);
 	}
+	
+	public void atualizarUsuario(Usuario usuario){
+		if(usuario.getId() == null){
+			throw new NegocioException("Erro ao atualizar usuario");
+		}
+		armazenarUsuario(usuario);
+	}
 
 	public void armazenarUsuario(Usuario usuario) {
 		validarCamposObrigatorios(usuario);
@@ -55,18 +62,6 @@ public class UsuarioService {
 	public void limparSenha(Long idUsuario) {
 		Usuario user = usuarioRepository.findOne(idUsuario);
 		user.setSenha(null);
-		usuarioRepository.save(user);
-	}
-
-	public void inativarUsuario(Long idUsuario) {
-		Usuario user = usuarioRepository.findOne(idUsuario);
-		user.setStatus(Status.INATIVO);
-		usuarioRepository.save(user);
-	}
-
-	public void ativarUsuario(Long idUsuario) {
-		Usuario user = usuarioRepository.findOne(idUsuario);
-		user.setStatus(Status.ATIVO);
 		usuarioRepository.save(user);
 	}
 

@@ -76,6 +76,10 @@ public class Usuario {
 	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
 	}
+	
+	public void setPerfil(String perfil) {
+		this.perfil = Perfil.getPerfil(perfil);
+	}
 
 	public Status getStatus() {
 		return status;
@@ -83,6 +87,10 @@ public class Usuario {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = Status.getStatus(status);
 	}
 
 	public boolean isAutorizado(Perfil perfil) {

@@ -12,7 +12,7 @@
 		}
 		
 		function recuperarPerfils(){
-			return $http.get(CONTEXTO + '/perfil').then(function(response){ return response}, errorCallback);
+			return $http.get(CONTEXTO + '/perfil').then(function(response){ return response.data}, errorCallback);
 		}
 
 		function errorCallback(response) {

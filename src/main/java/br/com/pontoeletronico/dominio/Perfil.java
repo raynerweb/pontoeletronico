@@ -25,4 +25,12 @@ public enum Perfil {
 		}
 		return null;
 	}
+
+	public static Perfil getPerfilPeloNome(String nome) {
+		for (Perfil perfil : Perfil.values()) {
+			if (perfil.name().equals(nome))
+				return perfil;
+		}
+		return null;
+	}
 }

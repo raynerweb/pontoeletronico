@@ -1,3 +1,6 @@
 .table tbody>tr>td.vert-align, .table thead>tr>th.vert-align{
     vertical-align: middle;
 }
+*.capitalize {
+	text-transform: capitalize;
+}

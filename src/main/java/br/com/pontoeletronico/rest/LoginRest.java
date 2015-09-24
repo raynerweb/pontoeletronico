@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.pontoeletronico.dominio.Usuario;
+import br.com.pontoeletronico.dto.LoginDTO;
 import br.com.pontoeletronico.service.UsuarioService;
 import br.com.pontoeletronico.utils.SessaoUtils;
 
@@ -28,7 +29,10 @@ public class LoginRest {
 	private HttpServletRequest request;
 
 	@POST
-	public Response login(Usuario usuario) {
+	public Response login(LoginDTO login) {
+		Usuario usuario = new Usuario();
+		usuario.setMatricula(login.getMatricula());
+		usuario.setSenha(login.getSenha());
 		Usuario usuarioLogado = usuarioService.realizarLogin(usuario);
 		SessaoUtils.addUsuarioSessao(request, usuarioLogado);
 		return Response.ok(usuarioLogado).build();
