@@ -78,7 +78,7 @@ public class Usuario {
 	}
 	
 	public void setPerfil(String perfil) {
-		this.perfil = Perfil.getPerfil(perfil);
+		this.perfil = Perfil.getPerfilSigla(perfil);
 	}
 
 	public Status getStatus() {
@@ -90,7 +90,7 @@ public class Usuario {
 	}
 	
 	public void setStatus(String status) {
-		this.status = Status.getStatus(status);
+		this.status = Status.getStatusSigla(status);
 	}
 
 	public boolean isAutorizado(Perfil perfil) {

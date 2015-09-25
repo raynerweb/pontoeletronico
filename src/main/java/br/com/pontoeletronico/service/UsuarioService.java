@@ -1,5 +1,6 @@
 package br.com.pontoeletronico.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.pontoeletronico.dominio.Perfil;
 import br.com.pontoeletronico.dominio.Status;
 import br.com.pontoeletronico.dominio.Usuario;
+import br.com.pontoeletronico.dto.UsuarioDTO;
 import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.repository.UsuarioRepository;
 
@@ -20,12 +22,17 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	public List<Usuario> recuperarPorStatusEPerfil(String siglaStatus, String siglaPerfil) {
-		Status[] status = StringUtils.isBlank(siglaStatus) || Status.getStatus(siglaStatus) == null ? Status.values()
-				: new Status[] { Status.getStatus(siglaStatus) };
-		Perfil[] perfis = StringUtils.isBlank(siglaPerfil) || Perfil.getPerfil(siglaPerfil) == null ? Perfil.getPerfis()
-				: new Perfil[] { Perfil.getPerfil(siglaPerfil) };
-		return usuarioRepository.findByStatusInAndPerfilIn(status, perfis);
+	public List<UsuarioDTO> recuperarPorStatusEPerfil(String siglaStatus, String siglaPerfil) {
+		Status[] status = StringUtils.isBlank(siglaStatus) || Status.getStatusSigla(siglaStatus) == null
+				? Status.values() : new Status[] { Status.getStatusSigla(siglaStatus) };
+		Perfil[] perfis = StringUtils.isBlank(siglaPerfil) || Perfil.getPerfilSigla(siglaPerfil) == null
+				? Perfil.getPerfis() : new Perfil[] { Perfil.getPerfilSigla(siglaPerfil) };
+		List<UsuarioDTO> usuariosDto = new ArrayList<UsuarioDTO>();
+		List<Usuario> usuarios = usuarioRepository.findByStatusInAndPerfilIn(status, perfis);
+		for (Usuario usuario : usuarios) {
+			usuariosDto.add(new UsuarioDTO(usuario));
+		}
+		return usuariosDto;
 	}
 
 	public Usuario realizarLogin(Usuario usuario) {
@@ -46,17 +53,17 @@ public class UsuarioService {
 		usuario.setStatus(Status.ATIVO);
 		armazenarUsuario(usuario);
 	}
-	
-	public void atualizarUsuario(Usuario usuario){
-		if(usuario.getId() == null){
+
+	public UsuarioDTO atualizarUsuario(UsuarioDTO usuario) {
+		if (usuario.getId() == null) {
 			throw new NegocioException("Erro ao atualizar usuario");
 		}
-		armazenarUsuario(usuario);
+		return new UsuarioDTO(armazenarUsuario(usuario.toUsuario()));
 	}
 
-	public void armazenarUsuario(Usuario usuario) {
+	public Usuario armazenarUsuario(Usuario usuario) {
 		validarCamposObrigatorios(usuario);
-		usuarioRepository.save(usuario);
+		return usuarioRepository.save(usuario);
 	}
 
 	public void limparSenha(Long idUsuario) {

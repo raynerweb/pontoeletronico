@@ -5,16 +5,17 @@
 		.module('listarUsuarioControllers', [])
 		.controller('listarUsuarioController', listarUsuarioController);
 
-	function listarUsuarioController(usuarioObject, usuarioService, perfilService, statusUsuarioService, $log, $filter) {
+	function listarUsuarioController(usuarioObject, usuarioService, perfilService, statusUsuarioService, $filter) {
 		var vm = this;
 
 		vm.iniciar = iniciar;
 		vm.apresentarFiltros = false;
-		vm.statusUsuario = '';
-		vm.perfilUsuario = '';
+		vm.usuario = {};
+		vm.usuario.status = '';
+		vm.usuario.perfil = '';
 		vm.atualizarUsuario = atualizarUsuario;
 		vm.editarUsuario = editarUsuario;
-		vm.limparFormularioAlteracao = limparFormularioAlteracao;
+		vm.filtrarStatus = filtrarStatus;
 		
 		function iniciar(){
 			var usuario = usuarioObject.recuperar();
@@ -30,7 +31,6 @@
 			vm.usuarios = []
 			usuarioService.recuperarUsuarios('', '').then(function(response){
 				vm.usuarios = response;
-				$log.log(vm.usuarios);
 			});
 		}
 		
@@ -51,16 +51,19 @@
 		function atualizarUsuario(usuario){
 			usuarioService.atualizarUsuario(usuario).then(function(response){
 				usuario.modoEdicao = false;
-				$log.log(response);
 			});
-		}
-		
-		function limparFormularioAlteracao(){
-			vm.usuarioAlteracao = {};
 		}
 		
 		function editarUsuario(usuario){
 			usuario.modoEdicao = true;
+		}
+		
+		function filtrarStatus(statusUsuario){
+			vm.usuario.status = statusUsuario;
+		}
+		
+		function filtrarPerfil(perfilUsuario){
+			vm.usuario.perfil = perfilUsuario;
 		}
 		
 	}

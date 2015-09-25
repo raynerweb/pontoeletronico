@@ -22,20 +22,20 @@
 					<div class="form-group">
 						<label for="statusUsuario" class="col-sm-2 control-label">Status do Usuário</label>
 						<div class="col-sm-6">
-							<div class="btn-group">
-								<label class="btn btn-default capitalize" ng-model="vm.statusUsuario" btn-radio="''">{{'TODOS' | lowercase}}</label>
-								<label ng-repeat="statusUsuario in vm.status" class="btn btn-default capitalize" 
-									ng-model="vm.statusUsuario" btn-radio="'{{statusUsuario}}'">{{statusUsuario | lowercase}}</label>
+							<div class="btn-group">{{vm.usuario.status}}
+								<label class="btn btn-default capitalize" ng-model="vm.usuario.status" btn-radio="''">Todos</label>
+								<label ng-repeat="statusUsuario in vm.status" class="btn btn-default" 
+									ng-model="vm.usuario.status" btn-radio="'{{statusUsuario.descricao}}'">{{statusUsuario.descricao}}</label>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="perfilUsuario" class="col-sm-2 control-label">Perfil do Usuário</label>
 						<div class="col-sm-6">
-							<div class="btn-group">
-								<label class="btn btn-default capitalize" ng-model="vm.perfilUsuario" btn-radio="''">{{'TODOS' | lowercase}}</label>
-								<label ng-repeat="perfil in vm.perfis" class="btn btn-default capitalize" 
-									ng-model="vm.perfilUsuario" btn-radio="'{{perfil}}'">{{perfil | lowercase}}</label>
+							<div class="btn-group">{{vm.usuario.perfil}}
+								<label class="btn btn-default" ng-model="vm.usuario.perfil" btn-radio="''">Todos</label>
+								<label ng-repeat="perfil in vm.perfis" class="btn btn-default" 
+									ng-model="vm.usuario.perfil" btn-radio="'{{perfil.descricao}}'">{{perfil.descricao}}</label>
 							</div>
 						</div>
 					</div>
@@ -54,7 +54,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="text-center" ng-repeat="usuario in vm.usuarios">
+				<tr class="text-center" ng-repeat="usuario in vm.usuarios | filter : vm.usuario">
 					<td class="vert-align col-md-5">
 						<span ng-hide="usuario.modoEdicao">{{usuario.nome}}</span>
 						<div ng-show="usuario.modoEdicao">
@@ -68,17 +68,17 @@
 						</div>
 					</td>
 					<td class="vert-align">
-						<span class="label label-default capitalize" ng-hide="usuario.modoEdicao">{{usuario.perfil | lowercase}}</span>
+						<span class="label label-default capitalize" ng-hide="usuario.modoEdicao">{{usuario.perfil}}</span>
 						<div class="btn-group" ng-show="usuario.modoEdicao">
-							<label ng-repeat="perfil in vm.perfis" class="btn btn-default btn-xs capitalize"
-								ng-model="usuario.perfil" btn-radio="'{{perfil}}'">{{perfil | lowercase}}</label>
+							<label ng-repeat="perfil in vm.perfis" class="btn btn-default btn-xs"
+								ng-model="usuario.perfil" btn-radio="'{{perfil.descricao}}'">{{perfil.descricao}}</label>
 						</div>
 					</td>
 					<td class="vert-align">
-						<span class="label label-default capitalize" ng-hide="usuario.modoEdicao">{{usuario.status | lowercase}}</span>
+						<span class="label label-default capitalize" ng-hide="usuario.modoEdicao">{{usuario.status}}</span>
 						<div class="btn-group" ng-show="usuario.modoEdicao">
 							<label ng-repeat="statusUsuario in vm.status" class="btn btn-default btn-xs capitalize"
-								ng-model="usuario.status" btn-radio="'{{statusUsuario}}'">{{statusUsuario | lowercase}}</label>
+								ng-model="usuario.status" btn-radio="'{{statusUsuario.descricao}}'">{{statusUsuario.descricao}}</label>
 						</div>
 					</td>
 					<td class="vert-align col-md-1" >

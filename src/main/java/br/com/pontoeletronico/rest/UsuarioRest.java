@@ -1,7 +1,5 @@
 package br.com.pontoeletronico.rest;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -45,9 +43,7 @@ public class UsuarioRest {
 	@Path("/atualizar-usuario")
 	@POST
 	public Response atualizarUsuario(UsuarioDTO usuarioDto) {
-		Usuario usuario = usuarioDto.toUsuario();
-		service.atualizarUsuario(usuario);
-		return Response.ok(usuario).build();
+		return Response.ok(service.atualizarUsuario(usuarioDto)).build();
 	}
 
 	@Path("/limpar-senha")
@@ -62,9 +58,9 @@ public class UsuarioRest {
 
 	@Path("/recuperar-usuario")
 	@GET
-	public List<Usuario> recuperarUsuarios(@QueryParam("status") String siglaStatus,
+	public Response recuperarUsuarios(@QueryParam("status") String siglaStatus,
 			@QueryParam("perfil") String siglaPerfil) {
-		return service.recuperarPorStatusEPerfil(siglaStatus, siglaPerfil);
+		return Response.ok(service.recuperarPorStatusEPerfil(siglaStatus, siglaPerfil)).build();
 	}
 
 }

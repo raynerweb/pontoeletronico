@@ -1,5 +1,7 @@
 package br.com.pontoeletronico.dto;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.pontoeletronico.dominio.Perfil;
@@ -11,10 +13,22 @@ public class UsuarioDTO {
 
 	private Long id;
 	private String nome;
-//	private String senha;
 	private String matricula;
 	private String perfil;
 	private String status;
+	private boolean possuiSenha;
+
+	public UsuarioDTO() {
+	}
+
+	public UsuarioDTO(Usuario usuario) {
+		setId(usuario.getId());
+		setNome(usuario.getNome());
+		setMatricula(usuario.getMatricula());
+		setPerfil(usuario.getPerfil().getDescricao());
+		setStatus(usuario.getStatus().getDescricao());
+		setPossuiSenha(StringUtils.isNotBlank(usuario.getSenha()));
+	}
 
 	public Long getId() {
 		return id;
@@ -31,14 +45,6 @@ public class UsuarioDTO {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-//	public String getSenha() {
-//		return senha;
-//	}
-//
-//	public void setSenha(String senha) {
-//		this.senha = senha;
-//	}
 
 	public String getMatricula() {
 		return matricula;
@@ -64,14 +70,21 @@ public class UsuarioDTO {
 		this.status = status;
 	}
 
+	public void setPossuiSenha(boolean possuiSenha) {
+		this.possuiSenha = possuiSenha;
+	}
+
+	public boolean isPossuiSenha() {
+		return possuiSenha;
+	}
+
 	public Usuario toUsuario() {
 		Usuario usuario = new Usuario();
 		usuario.setId(getId());
 		usuario.setNome(getNome());
 		usuario.setMatricula(getMatricula());
-		usuario.setPerfil(Perfil.getPerfilPeloNome(getPerfil()));
-		usuario.setStatus(Status.getStatusPeloNome(getStatus()));
-//		usuario.setSenha(getSenha());
+		usuario.setPerfil(Perfil.getPerfilDescricao(getPerfil()));
+		usuario.setStatus(Status.getStatusDescricao(getStatus()));
 		return usuario;
 	}
 
