@@ -22,20 +22,22 @@
 					<div class="form-group">
 						<label for="statusUsuario" class="col-sm-2 control-label">Status do Usuário</label>
 						<div class="col-sm-6">
-							<div class="btn-group">{{vm.usuario.status}}
-								<label class="btn btn-default capitalize" ng-model="vm.usuario.status" btn-radio="''">Todos</label>
-								<label ng-repeat="statusUsuario in vm.status" class="btn btn-default" 
-									ng-model="vm.usuario.status" btn-radio="'{{statusUsuario.descricao}}'">{{statusUsuario.descricao}}</label>
+							<div class="btn-group">
+								<label class="btn btn-default" ng-click="vm.filtrarStatus(vm.todos)"
+									ng-model="vm.statusUsuario" btn-radio="vm.todos">{{vm.todos.descricao}}</label>
+								<label ng-repeat="statusUsuario in vm.status" class="btn btn-default" ng-click="vm.filtrarStatus(statusUsuario)"
+									ng-model="vm.statusUsuario" btn-radio="statusUsuario">{{statusUsuario.descricao}}</label>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="perfilUsuario" class="col-sm-2 control-label">Perfil do Usuário</label>
 						<div class="col-sm-6">
-							<div class="btn-group">{{vm.usuario.perfil}}
-								<label class="btn btn-default" ng-model="vm.usuario.perfil" btn-radio="''">Todos</label>
-								<label ng-repeat="perfil in vm.perfis" class="btn btn-default" 
-									ng-model="vm.usuario.perfil" btn-radio="'{{perfil.descricao}}'">{{perfil.descricao}}</label>
+							<div class="btn-group">
+								<label class="btn btn-default" ng-click="vm.filtrarPerfil(vm.todos)"
+									ng-model="vm.perfilUsuario" btn-radio="vm.todos">{{vm.todos.descricao}}</label>
+								<label ng-repeat="perfil in vm.perfis" class="btn btn-default" ng-click="vm.filtrarPerfil(perfil)"
+									ng-model="vm.perfilUsuario" btn-radio="perfil">{{perfil.descricao}}</label>
 							</div>
 						</div>
 					</div>

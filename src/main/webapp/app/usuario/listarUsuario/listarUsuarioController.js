@@ -11,11 +11,13 @@
 		vm.iniciar = iniciar;
 		vm.apresentarFiltros = false;
 		vm.usuario = {};
-		vm.usuario.status = '';
-		vm.usuario.perfil = '';
+		vm.todos = {sigla : '', descricao : 'Todos'};
+		vm.statusUsuario = {sigla : '', descricao : 'Todos'};
+		vm.perfilUsuario = {sigla : '', descricao : 'Todos'};
 		vm.atualizarUsuario = atualizarUsuario;
 		vm.editarUsuario = editarUsuario;
 		vm.filtrarStatus = filtrarStatus;
+		vm.filtrarPerfil = filtrarPerfil;
 		
 		function iniciar(){
 			var usuario = usuarioObject.recuperar();
@@ -59,13 +61,16 @@
 		}
 		
 		function filtrarStatus(statusUsuario){
-			vm.usuario.status = statusUsuario;
+			usuarioService.recuperarUsuarios(statusUsuario.sigla, vm.perfilUsuario.sigla).then(function(response){
+				vm.usuarios = response;
+			});
 		}
 		
 		function filtrarPerfil(perfilUsuario){
-			vm.usuario.perfil = perfilUsuario;
+			usuarioService.recuperarUsuarios(vm.statusUsuario.sigla, perfilUsuario.sigla).then(function(response){
+				vm.usuarios = response;
+			});
 		}
-		
 	}
 
 })();
