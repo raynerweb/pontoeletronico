@@ -9,7 +9,8 @@
 
 		return {
 			recuperarUsuarios : recuperarUsuarios,
-			atualizarUsuario : atualizarUsuario
+			atualizarUsuario : atualizarUsuario,
+			cadastrarUsuario : cadastrarUsuario
 		}
 		
 		function recuperarUsuarios(siglaStatus, siglaPerfil){
@@ -27,12 +28,17 @@
 		}
 		
 		function atualizarUsuario(usuario){
-			return $http.post(CONTEXTO + '/usuario/atualizar-usuario', usuario)
-			.then(
-				function(response){
-					return response.data;
-				}, 
-				errorCallback);
+			return $http.post(CONTEXTO + '/usuario/atualizar-usuario', usuario);
+		}
+		
+		function cadastrarUsuario(usuario){
+			var usuarioDto = {
+					perfil : usuario.perfil.descricao,
+					status : usuario.status.descricao,
+					matricula : usuario.matricula,
+					nome : usuario.nome
+			};
+			return $http.post(CONTEXTO + '/usuario/cadastrar', usuarioDto);
 		}
 		
 		function limparSenha(usuario){
@@ -41,6 +47,7 @@
 
 		function errorCallback(response) {
 			$log.log(JSON.stringify(response));
+			return response;
 		}
 	}
 

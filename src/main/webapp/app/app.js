@@ -25,7 +25,7 @@
 			'usuarioObjects'
 
 		])
-		.factory('requestResponseInterceptor', requestResponseInterceptor)
+//		.factory('requestResponseInterceptor', requestResponseInterceptor)
 //		.factory('usuarioObject', usuarioObject)
 		.config([
 			'$httpProvider',
@@ -128,7 +128,7 @@
 		$httpProvider.defaults.withCredentials = true;
 		$httpProvider.defaults.useXDomain = true;
 		
-		$httpProvider.interceptors.push('requestResponseInterceptor');
+//		$httpProvider.interceptors.push('requestResponseInterceptor');
 
 		$routeProvider.
 			when('/login', {

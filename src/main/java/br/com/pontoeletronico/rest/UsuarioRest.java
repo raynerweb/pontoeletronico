@@ -35,9 +35,8 @@ public class UsuarioRest {
 
 	@Path("/cadastrar")
 	@POST
-	public Usuario cadastrar(Usuario usuario) throws NegocioException {
-		service.realizarCadastroUsuario(usuario);
-		return usuario;
+	public Response cadastrar(UsuarioDTO usuario) throws NegocioException {
+		return Response.ok(service.realizarCadastroUsuario(usuario)).build();
 	}
 
 	@Path("/atualizar-usuario")

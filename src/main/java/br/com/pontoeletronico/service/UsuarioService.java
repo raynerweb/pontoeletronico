@@ -44,26 +44,21 @@ public class UsuarioService {
 		return usuarioLogado;
 	}
 
-	public void realizarCadastroUsuario(Usuario usuario) {
+	public UsuarioDTO realizarCadastroUsuario(UsuarioDTO usuario) {
 		validarCamposObrigatorios(usuario);
-		Usuario usuarioLogado = usuarioRepository.findByMatriculaAndSenha(usuario.getMatricula(), usuario.getSenha());
-		if (usuarioLogado != null) {
-			throw new NegocioException("Usuário já cadastrado.");
-		}
-		usuario.setStatus(Status.ATIVO);
-		armazenarUsuario(usuario);
+		return new UsuarioDTO(armazenarUsuario(usuario));
 	}
 
 	public UsuarioDTO atualizarUsuario(UsuarioDTO usuario) {
 		if (usuario.getId() == null) {
 			throw new NegocioException("Erro ao atualizar usuario");
 		}
-		return new UsuarioDTO(armazenarUsuario(usuario.toUsuario()));
+		return new UsuarioDTO(armazenarUsuario(usuario));
 	}
 
-	public Usuario armazenarUsuario(Usuario usuario) {
+	public Usuario armazenarUsuario(UsuarioDTO usuario) {
 		validarCamposObrigatorios(usuario);
-		return usuarioRepository.save(usuario);
+		return usuarioRepository.save(usuario.toUsuario());
 	}
 
 	public void limparSenha(Long idUsuario) {
@@ -72,7 +67,7 @@ public class UsuarioService {
 		usuarioRepository.save(user);
 	}
 
-	private void validarCamposObrigatorios(Usuario usuario) {
+	private void validarCamposObrigatorios(UsuarioDTO usuario) {
 		Map<String, String> errors = new HashMap<String, String>();
 		if (StringUtils.isBlank(usuario.getMatricula())) {
 			errors.put("matricula", "Matrícula não informada");
@@ -80,11 +75,15 @@ public class UsuarioService {
 		if (StringUtils.isBlank(usuario.getNome())) {
 			errors.put("nome", "Nome não informado");
 		}
-		if (usuario.getPerfil() == null) {
+		if (StringUtils.isBlank(usuario.getPerfil())) {
 			errors.put("perfil", "Perfil não informado");
 		}
-		if (usuario.getStatus() == null) {
+		if (StringUtils.isBlank(usuario.getStatus())) {
 			errors.put("status", "Status não informado");
+		}
+		Usuario usuarioRecuperado = usuarioRepository.findByMatricula(usuario.getMatricula());
+		if (usuarioRecuperado != null) {
+			throw new NegocioException("Usuário já cadastrado.");
 		}
 		if (!errors.isEmpty()) {
 			throw new NegocioException(errors);

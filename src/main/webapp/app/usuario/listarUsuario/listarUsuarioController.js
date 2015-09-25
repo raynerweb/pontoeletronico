@@ -10,7 +10,6 @@
 
 		vm.iniciar = iniciar;
 		vm.apresentarFiltros = false;
-		vm.usuario = {};
 		vm.todos = {sigla : '', descricao : 'Todos'};
 		vm.statusUsuario = {sigla : '', descricao : 'Todos'};
 		vm.perfilUsuario = {sigla : '', descricao : 'Todos'};
@@ -51,9 +50,18 @@
 		}
 		
 		function atualizarUsuario(usuario){
-			usuarioService.atualizarUsuario(usuario).then(function(response){
-				usuario.modoEdicao = false;
-			});
+			vm.alerts = [];
+			usuarioService.atualizarUsuario(usuario).then(
+				function(response){
+					usuario.modoEdicao = false;
+					vm.alerts.push({type : 'info', msg : 'Usuario atualizado'});
+			}, 
+				function(response){
+					angular.forEach(response.data, function(mensagem, key){
+						vm.alerts.push({type : 'danger', msg : mensagem});
+					});
+				}
+			);
 		}
 		
 		function editarUsuario(usuario){

@@ -12,6 +12,8 @@ import br.com.pontoeletronico.dominio.Usuario;
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
+	Usuario findByMatricula(String matricula);
+	
 	Usuario findByMatriculaAndSenha(String matricula, String senha);
 	
 	List<Usuario> findByStatusInAndPerfilIn(Status[] status, Perfil[] perfil);
