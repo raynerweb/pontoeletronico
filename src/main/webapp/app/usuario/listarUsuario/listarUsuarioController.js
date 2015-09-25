@@ -10,10 +10,9 @@
 
 		vm.iniciar = iniciar;
 		vm.apresentarFiltros = false;
-		vm.statusUsuario = 'TODOS';
-		vm.perfilUsuario = 'TODOS';
+		vm.statusUsuario = '';
+		vm.perfilUsuario = '';
 		vm.atualizarUsuario = atualizarUsuario;
-		vm.isUsuarioAlterado = isUsuarioAlterado;
 		vm.editarUsuario = editarUsuario;
 		vm.limparFormularioAlteracao = limparFormularioAlteracao;
 		
@@ -51,12 +50,9 @@
 		
 		function atualizarUsuario(usuario){
 			usuarioService.atualizarUsuario(usuario).then(function(response){
-				usuario.isAlterado = false;
+				usuario.modoEdicao = false;
+				$log.log(response);
 			});
-		}
-		
-		function isUsuarioAlterado(usuario){
-			usuario.isAlterado = true;
 		}
 		
 		function limparFormularioAlteracao(){
@@ -64,8 +60,7 @@
 		}
 		
 		function editarUsuario(usuario){
-			vm.usuarioAlteracao = {};
-			angular.copy(usuario, vm.usuarioAlteracao);
+			usuario.modoEdicao = true;
 		}
 		
 	}
