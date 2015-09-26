@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +15,7 @@ import br.com.pontoeletronico.dto.UsuarioDTO;
 import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.repository.UsuarioRepository;
 
+@Ignore
 public class UsuarioServiceTest extends AbstractTest {
 
 	@Autowired

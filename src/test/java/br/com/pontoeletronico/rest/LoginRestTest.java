@@ -1,6 +1,7 @@
 package br.com.pontoeletronico.rest;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ public class LoginRestTest extends RestTest {
 	private UsuarioRepository usuarioRepository;
 
 	@Test
+	@Ignore
 	public void realizarLoginSucesso() {
 		Usuario u = new Usuario();
 		u.setMatricula("root");
@@ -28,6 +30,7 @@ public class LoginRestTest extends RestTest {
 	}
 
 	@Test(expected = Exception.class)
+	@Ignore
 	public void matriculaSenhaNaoConfere() {
 		Usuario u = new Usuario();
 		u.setMatricula("toor");

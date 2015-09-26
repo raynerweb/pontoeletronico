@@ -69,6 +69,7 @@ public class OcorrenciaRestTest extends RestTest {
 	}
 
 	@Test
+	@Ignore
 	public void registrarOcorrencia() {
 		
 		Usuario usuario = usuarioRepository.findOne(idUsuario);
