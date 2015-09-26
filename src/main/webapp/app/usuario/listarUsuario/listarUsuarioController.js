@@ -7,7 +7,7 @@
 
 	function listarUsuarioController(usuarioObject, usuarioService, perfilService, statusUsuarioService, $filter) {
 		var vm = this;
-
+		
 		vm.iniciar = iniciar;
 		vm.apresentarFiltros = false;
 		vm.todos = {sigla : '', descricao : 'Todos'};
@@ -17,6 +17,8 @@
 		vm.editarUsuario = editarUsuario;
 		vm.filtrarStatus = filtrarStatus;
 		vm.filtrarPerfil = filtrarPerfil;
+		vm.limparSenha = limparSenha;
+		vm.fecharAlert = fecharAlert;
 		
 		function iniciar(){
 			var usuario = usuarioObject.recuperar();
@@ -68,6 +70,21 @@
 			usuario.modoEdicao = true;
 		}
 		
+		function limparSenha(usuario){
+			vm.alerts = [];
+			usuarioService.limparSenha(usuario).then(
+				function(response){
+					vm.alerts.push({type : 'info', msg : 'A senha de ' + usuario.nome + ' foi apagada.'});
+					usuario.possuiSenha = false;
+				},
+				function(response){
+					angular.forEach(response.data, function(mensagem, key){
+						vm.alerts.push({type : 'danger', msg : mensagem});
+					});
+				}
+			);
+		}
+		
 		function filtrarStatus(statusUsuario){
 			usuarioService.recuperarUsuarios(statusUsuario.sigla, vm.perfilUsuario.sigla).then(function(response){
 				vm.usuarios = response;
@@ -78,6 +95,10 @@
 			usuarioService.recuperarUsuarios(vm.statusUsuario.sigla, perfilUsuario.sigla).then(function(response){
 				vm.usuarios = response;
 			});
+		}
+		
+		function fecharAlert(index){
+			vm.alerts.splice(index, 1);
 		}
 	}
 

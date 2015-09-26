@@ -10,7 +10,8 @@
 		return {
 			recuperarUsuarios : recuperarUsuarios,
 			atualizarUsuario : atualizarUsuario,
-			cadastrarUsuario : cadastrarUsuario
+			cadastrarUsuario : cadastrarUsuario,
+			limparSenha : limparSenha
 		}
 		
 		function recuperarUsuarios(siglaStatus, siglaPerfil){
@@ -42,7 +43,10 @@
 		}
 		
 		function limparSenha(usuario){
-			
+			var parametros = {
+				idUsuario : usuario.id
+			};
+			return $http.get(CONTEXTO + '/usuario/limpar-senha', {params : parametros});
 		}
 
 		function errorCallback(response) {

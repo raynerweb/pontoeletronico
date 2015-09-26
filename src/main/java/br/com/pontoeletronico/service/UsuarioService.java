@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.pontoeletronico.dominio.Perfil;
@@ -19,6 +21,8 @@ import br.com.pontoeletronico.repository.UsuarioRepository;
 @Service
 public class UsuarioService {
 
+	private final Logger log = Logger.getLogger(UsuarioService.class);
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
@@ -45,6 +49,10 @@ public class UsuarioService {
 	}
 
 	public UsuarioDTO realizarCadastroUsuario(UsuarioDTO usuario) {
+		Usuario usuarioRecuperado = usuarioRepository.findByMatricula(usuario.getMatricula());
+		if (usuarioRecuperado != null) {
+			throw new NegocioException("Usuário já cadastrado.");
+		}
 		validarCamposObrigatorios(usuario);
 		return new UsuarioDTO(armazenarUsuario(usuario));
 	}
@@ -58,7 +66,12 @@ public class UsuarioService {
 
 	public Usuario armazenarUsuario(UsuarioDTO usuario) {
 		validarCamposObrigatorios(usuario);
-		return usuarioRepository.save(usuario.toUsuario());
+		try {
+			return usuarioRepository.save(usuario.toUsuario());
+		} catch(DataIntegrityViolationException e){
+			log.warn(e.getMessage());
+			throw new NegocioException("Erro ao armazenar usuario");
+		}
 	}
 
 	public void limparSenha(Long idUsuario) {
@@ -80,10 +93,6 @@ public class UsuarioService {
 		}
 		if (StringUtils.isBlank(usuario.getStatus())) {
 			errors.put("status", "Status não informado");
-		}
-		Usuario usuarioRecuperado = usuarioRepository.findByMatricula(usuario.getMatricula());
-		if (usuarioRecuperado != null) {
-			throw new NegocioException("Usuário já cadastrado.");
 		}
 		if (!errors.isEmpty()) {
 			throw new NegocioException(errors);

@@ -49,9 +49,9 @@ public class UsuarioRest {
 	@GET
 	public Response limparSenha(@QueryParam("idUsuario") Long idUsuario) {
 		Usuario usuario = SessaoUtils.getUsuarioLogado(request);
-		if (usuario.isAutorizado(perfil)) {
+//		if (usuario.isAutorizado(perfil)) {
 			service.limparSenha(idUsuario);
-		}
+//		}
 		return Response.ok().build();
 	}
 
