@@ -29,4 +29,12 @@ public enum StatusOcorrencia {
 		}
 		return null;
 	}
+	
+	public static StatusOcorrencia getStatusOcorrenciaDescricao(String descricao) {
+		for (StatusOcorrencia status : StatusOcorrencia.values()) {
+			if (status.getDescricao().equals(descricao))
+				return status;
+		}
+		return null;
+	}
 }

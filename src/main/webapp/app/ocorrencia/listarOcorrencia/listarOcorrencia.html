@@ -79,35 +79,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="text-center">
-					<td><span popover-placement="right" popover="{{vm.justificativaDaOcorrencia}}" popover-trigger="mouseenter">10/09/2015</span></td>
-					<td>08:00</td>
-					<td>12:00</td>
-					<td>13:00</td>
-					<td>18:00</td>
-					<td>-</td>
-					<td>-</td>
-					<td>Aberta</td>
-				</tr>
-				<tr class="text-center danger">
-					<td><span popover-placement="right" popover="{{vm.justificativaDaOcorrencia}}" popover-trigger="mouseenter">11/09/2015</span></td>
-					<td>08:00</td>
-					<td>12:00</td>
-					<td>13:00</td>
-					<td>18:00</td>
-					<td>-</td>
-					<td>-</td>
-					<td>Rejeitada</td>
-				</tr>
-				<tr class="text-center">
-					<td><span popover-placement="right" popover="{{vm.justificativaDaOcorrencia}}" popover-trigger="mouseenter">12/09/2015</span></td>
-					<td>08:00</td>
-					<td>12:00</td>
-					<td>13:00</td>
-					<td>18:00</td>
-					<td>18:01</td>
-					<td>22:45</td>
-					<td>Aceita</td>
+				<tr class="text-center" ng-class="{danger : ocorrencia.rejeitada}" ng-repeat="ocorrencia in vm.ocorrencias" >
+					<td><span popover-placement="right" popover="{{ocorrencia.justificativa}}" popover-trigger="mouseenter">{{ocorrencia.dataRegistro}}</span></td>
+					<td>{{ocorrencia.entradaPrimeiroTurno}}</td>
+					<td>{{ocorrencia.saidaPrimeiroTurno}}</td>
+					<td>{{ocorrencia.entradaSegundoTurno}}</td>
+					<td>{{ocorrencia.saidaSegundoTurno}}</td>
+					<td>{{ocorrencia.entradaTerceiroTurno}}</td>
+					<td>{{ocorrencia.saidaTerceiroTurno}}</td>
+					<td>{{ocorrencia.descricaoStatusOcorrencia}}</td>
 				</tr>
 			</tbody>
 		</table>

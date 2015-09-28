@@ -58,7 +58,7 @@ public class PontoService {
 		return pontoRepository.findByUsuarioIdOrderByDataRegistroDesc(idUsuario);
 	}
 
-	private Ponto recuperarPorDataRegistroIdUsuario(Long idUsuario, Date dataRegistro) {
+	public Ponto recuperarPorDataRegistroIdUsuario(Long idUsuario, Date dataRegistro) {
 		return pontoRepository.findByDataRegistroAndUsuarioId(dataRegistro, idUsuario);
 	}
 
@@ -82,7 +82,7 @@ public class PontoService {
 		if (usuarioLogado == null) {
 			errors.put("usuario", "Usuario não encontrado");
 		}
-		if (!usuarioLogado.getId().equals(idUsuario)) {
+		if (usuarioLogado != null && !usuarioLogado.getId().equals(idUsuario)) {
 			errors.put("usuario", "Erro ao registrar ponto");
 		}
 

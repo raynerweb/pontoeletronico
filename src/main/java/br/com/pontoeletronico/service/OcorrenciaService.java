@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.pontoeletronico.dominio.Ocorrencia;
+import br.com.pontoeletronico.dominio.Ponto;
 import br.com.pontoeletronico.dominio.StatusOcorrencia;
+import br.com.pontoeletronico.dto.OcorrenciaDTO;
 import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.repository.OcorrenciaRepository;
 
@@ -20,6 +22,9 @@ public class OcorrenciaService {
 
 	@Autowired
 	private OcorrenciaRepository ocorrenciaRepository;
+	
+	@Autowired
+	private PontoService pontoService;
 
 	private OcorrenciaRepository getOcorrenciaRepository() {
 		return ocorrenciaRepository;
@@ -41,16 +46,24 @@ public class OcorrenciaService {
 		return getOcorrenciaRepository().findByUsuarioIdOrderByPontoDataRegistroDesc(usuarioId);
 	}
 
-	public void registrarOcorrencia(Ocorrencia ocorrencia) throws NegocioException {
-		getOcorrenciaRepository().save(ocorrencia);
+	public OcorrenciaDTO registrarOcorrencia(OcorrenciaDTO ocorrenciaDto) throws NegocioException {
+		Ponto ponto = pontoService.recuperarPorDataRegistroIdUsuario(ocorrenciaDto.getIdUsuario(), ocorrenciaDto.getDataRegistro());
+		Ocorrencia ocorrencia = ocorrenciaDto.toOcorrencia();
+		ocorrencia.setPonto(ponto);
+		return new OcorrenciaDTO(getOcorrenciaRepository().save(ocorrencia));
 	}
 
-	public List<Ocorrencia> recuperaPorIdUsuarioIntervaloDataRegistroStatusOcorrencia(Long idUsuario, Date dataInicial,
+	public List<OcorrenciaDTO> recuperaPorIdUsuarioIntervaloDataRegistroStatusOcorrencia(Long idUsuario, Date dataInicial,
 			Date dataFinal, List<String> siglasStatusOcorrencia) {
 		
 		List<StatusOcorrencia> statusOcorrencia = converteListaSiglasParaListaStatusOcorrencia(siglasStatusOcorrencia);
 		validaPesquisaOcorrencia(idUsuario, dataInicial, dataFinal);
-		return ocorrenciaRepository.findByUsuarioIdAndPontoDataRegistroBetweenAndStatusOcorrenciaInOrderByPontoDataRegistroDesc(idUsuario, dataInicial, dataFinal, statusOcorrencia);
+		List<Ocorrencia> ocorrencias = ocorrenciaRepository.findByUsuarioIdAndPontoDataRegistroBetweenAndStatusOcorrenciaInOrderByPontoDataRegistroDesc(idUsuario, dataInicial, dataFinal, statusOcorrencia);
+		List<OcorrenciaDTO> ocorrenciasDTO = new ArrayList<OcorrenciaDTO>();
+		for (Ocorrencia ocorrencia : ocorrencias) {
+			ocorrenciasDTO.add(new OcorrenciaDTO(ocorrencia));
+		}
+		return ocorrenciasDTO;
 	}
 	
 	private List<StatusOcorrencia> converteListaSiglasParaListaStatusOcorrencia(List<String> siglasStatusOcorrencia) {

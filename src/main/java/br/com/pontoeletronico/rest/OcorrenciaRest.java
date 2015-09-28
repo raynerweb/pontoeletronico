@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.pontoeletronico.dominio.Ocorrencia;
 import br.com.pontoeletronico.dominio.StatusOcorrencia;
+import br.com.pontoeletronico.dto.OcorrenciaDTO;
 import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.service.OcorrenciaService;
 import br.com.pontoeletronico.utils.DateUtils;
@@ -30,11 +31,10 @@ public class OcorrenciaRest {
 
 	@Path("/consultar")
 	@GET
-	public List<Ocorrencia> consultar(@QueryParam("idUsuario") Long idUsuario,
-			@QueryParam("dataInicial") Long dataInicial, @QueryParam("dataFinal") Long dataFinal,
-			@QueryParam("status") List<String> siglasStatusOcorrencia) {
-		
-		return ocorrenciaService.recuperaPorIdUsuarioIntervaloDataRegistroStatusOcorrencia(idUsuario, DateUtils.toDate(dataInicial), DateUtils.toDate(dataFinal), siglasStatusOcorrencia);
+	public Response consultar(@QueryParam("idUsuario") Long idUsuario, @QueryParam("dataInicial") Long dataInicial,
+			@QueryParam("dataFinal") Long dataFinal, @QueryParam("status") List<String> siglasStatusOcorrencia) {
+		return Response.ok(ocorrenciaService.recuperaPorIdUsuarioIntervaloDataRegistroStatusOcorrencia(idUsuario,
+				DateUtils.toDate(dataInicial), DateUtils.toDate(dataFinal), siglasStatusOcorrencia)).build();
 	}
 
 	@Path("/consultarStatusOcorrencia")
@@ -61,9 +61,8 @@ public class OcorrenciaRest {
 
 	@Path("/registrarOcorrencia")
 	@POST
-	public Response registrarOcorrencia(Ocorrencia ocorrencia) throws NegocioException {
-		getOcorrenciaService().registrarOcorrencia(ocorrencia);
-		return Response.ok().build();
+	public Response registrarOcorrencia(OcorrenciaDTO ocorrencia) throws NegocioException {
+		return Response.ok(getOcorrenciaService().registrarOcorrencia(ocorrencia)).build();
 	}
 
 	private OcorrenciaService getOcorrenciaService() {

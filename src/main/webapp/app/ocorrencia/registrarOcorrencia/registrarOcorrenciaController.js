@@ -5,15 +5,16 @@
 		.module('registrarOcorrenciaControllers', [])
 		.controller('registrarOcorrenciaController', registrarOcorrenciaController);
 
-	function registrarOcorrenciaController(usuarioObject) {
+	function registrarOcorrenciaController(usuarioObject, $log, ocorrenciaService) {
 		var vm = this;
 		
 		vm.alerts = [];
-		vm.justificativa = '';
+		vm.ocorrencia = {};
 		
 		vm.iniciar = iniciar;
 		vm.iniciarCalendario = iniciarCalendario;
 		vm.mostrarCalendario = mostrarCalendario;
+		vm.registrarOcorrencia = registrarOcorrencia;
 		vm.fecharAlert = fecharAlert;
 		
 		function iniciar(){
@@ -22,7 +23,7 @@
 //				$location.path('/login');
 			}
 			
-			recuperarPonto(new Date());
+			iniciarCalendario();
 		}
 		
 		function iniciarCalendario(){
@@ -38,13 +39,18 @@
 		}
 		
 		function registrarOcorrencia(){
+			vm.ocorrencia.dataRegistro = vm.calendario.data;
+			var usuario = usuarioObject.recuperar();
+			vm.ocorrencia.idUsuario = usuario.id;
+			ocorrenciaService.registrarOcorrencia(vm.ocorrencia).then(
+				function(response){
+					$log.log(response);
+				},
+				function(response){
+					$log.log(response);
+				}
+			)
 			console.log('chamar ocorrenciaService.registrarOcorrencia()');
-		}
-		
-		function recuperarPonto(data){
-			console.log('chamar ocorrenciaService.recuperarPonto(usuario, new Date().getTime())');
-			vm.alerts.push({type:'warning', msg : 'Não há registro de ponto no dia!'});
-			
 		}
 		
 		function fecharAlert(index){

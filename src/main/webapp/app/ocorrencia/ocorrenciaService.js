@@ -8,7 +8,8 @@
 	function ocorrenciaService($http, CONTEXTO, $log) {
 
 		return {
-			consultar : consultar
+			consultar : consultar,
+			registrarOcorrencia : registrarOcorrencia
 		}
 		
 		function consultar(consulta){
@@ -19,6 +20,10 @@
 				status : consulta.status
 			}
 			return $http.get(CONTEXTO + '/ocorrencia/consultar', {params : parametros})
+		}
+		
+		function registrarOcorrencia(ocorrencia){
+			return $http.post(CONTEXTO + '/ocorrencia/registrarOcorrencia', ocorrencia)
 		}
 
 		function errorCallback(response) {

@@ -81,8 +81,9 @@
 			consulta.dataFinal = vm.calendarioFinal.data.getTime();
 			consulta.idUsuario = 1;
 			
+			vm.ocorrencias = [];
 			ocorrenciaService.consultar(consulta).then(function(response){
-				$log.log(response);
+				vm.ocorrencias = response.data;
 			});
 		}
 		
