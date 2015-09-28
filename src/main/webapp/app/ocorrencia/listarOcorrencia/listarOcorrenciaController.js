@@ -5,17 +5,15 @@
 		.module('listarOcorrenciaControllers', [])
 		.controller('listarOcorrenciaController', listarOcorrenciaController);
 
-	function listarOcorrenciaController(usuarioObject) {
+	function listarOcorrenciaController(usuarioObject, ocorrenciaService, statusOcorrenciaService, $log) {
 		var vm = this;
 		
 		vm.alerts = [];
 		vm.apresentarFiltros = false;
-		vm.statusOcorrencia = {};
 		
 		vm.justificativaDaOcorrencia = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras diam enim, ultricies sit amet orci a, placerat malesuada lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In pulvinar pharetra elit, ut euismod velit. Vestibulum non congue metus, quis feugiat lacus. Aliquam erat volutpat. Aliquam sodales convallis nibh, a cursus nulla facilisis eu. Cras id eros nisl. Vivamus tincidunt mi arcu, viverra luctus urna pulvinar in. ";
 		
 		vm.iniciar = iniciar;
-		vm.iniciarCalendario = iniciarCalendario;
 		vm.mostrarCalendarioInicial = mostrarCalendarioInicial;
 		vm.mostrarCalendarioFinal = mostrarCalendarioFinal;
 		vm.fecharAlert = fecharAlert;
@@ -26,22 +24,34 @@
 			if (objectUtils.isEmpty(usuario)){
 //				$location.path('/login');
 			}
-			
-			vm.alerts.push({type : 'info' , msg : 'A intenção é que a pesquisa ocorra a cada alteracao do formulario'});
+			iniciarCalendario();
+			recuperarStatusOcorrencia();
 		}
 		
 		function iniciarCalendario(){
 			vm.calendarioFormat = "dd/MM/yyyy";
 			
+			var anoAtual = moment().year();
+			var mesAtual = moment().month();
+			var dataInicial = moment([anoAtual, mesAtual]).toDate();
+			var dataFinal = moment(dataInicial).endOf('month').toDate();
+			
 			vm.calendarioInicial = {};
-			vm.calendarioInicial.data = new Date();
-			vm.calendarioInicial.maxDate = new Date();
+			vm.calendarioInicial.data = dataInicial;
+			vm.calendarioInicial.maxDate = dataFinal;
 			vm.calendarioInicial.isOpen = false;
 			
 			vm.calendarioFinal = {};
-			vm.calendarioFinal.data = new Date();
-			vm.calendarioFinal.maxDate = new Date();
+			vm.calendarioFinal.data = dataFinal;
+			vm.calendarioFinal.maxDate = dataFinal;
 			vm.calendarioFinal.isOpen = false;
+		}
+		
+		function recuperarStatusOcorrencia(){
+			vm.statusOcorrencia = [];
+			statusOcorrenciaService.recuperarStatusOcorrencia().then(function(response){
+				vm.statusOcorrencia = response;
+			});
 		}
 		
 		function mostrarCalendarioInicial($event){
@@ -56,14 +66,26 @@
 			vm.alerts.splice(index, 1);
 		}
 		
-		function toogleFiltros(){
-			vm.apresentarFiltros = !vm.apresentarFiltros;
+		function listarOcorrencias(){
+			var status = [];
+			var consulta = {};
+			
+			angular.forEach(vm.statusOcorrencia, function(value, key){
+				if(value.selecionado){
+					status.push(value.sigla);
+				}
+			});
+			
+			consulta.status = status;
+			consulta.dataInicial = vm.calendarioInicial.data.getTime();
+			consulta.dataFinal = vm.calendarioFinal.data.getTime();
+			consulta.idUsuario = 1;
+			
+			ocorrenciaService.consultar(consulta).then(function(response){
+				$log.log(response);
+			});
 		}
 		
-		function listarOcorrencias(){
-			console.log('ocorrenciaService.listarOcorrencias(vm.statusOcorrencia, vm.calendarioInicial.getTime(), vm.calendarioInicial.getTime())');
-		}
-
 	}
 
 })();

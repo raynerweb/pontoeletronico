@@ -11,6 +11,7 @@
 			'constants',
 			'perfilServices',
 			'statusUsuarioServices',
+			'statusOcorrenciaServices',
 			'loginControllers',
 			'loginServices',
 			'painelControllers',

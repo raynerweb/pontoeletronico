@@ -17,6 +17,7 @@ import br.com.pontoeletronico.dominio.Ocorrencia;
 import br.com.pontoeletronico.dominio.StatusOcorrencia;
 import br.com.pontoeletronico.exception.NegocioException;
 import br.com.pontoeletronico.service.OcorrenciaService;
+import br.com.pontoeletronico.utils.DateUtils;
 
 @Path("/ocorrencia")
 @Produces(MediaType.APPLICATION_JSON)
@@ -27,17 +28,26 @@ public class OcorrenciaRest {
 	private OcorrenciaService ocorrenciaService;
 	private Ocorrencia ocorrencia;
 
+	@Path("/consultar")
+	@GET
+	public List<Ocorrencia> consultar(@QueryParam("idUsuario") Long idUsuario,
+			@QueryParam("dataInicial") Long dataInicial, @QueryParam("dataFinal") Long dataFinal,
+			@QueryParam("status") List<String> siglasStatusOcorrencia) {
+		
+		return ocorrenciaService.recuperaPorIdUsuarioIntervaloDataRegistroStatusOcorrencia(idUsuario, DateUtils.toDate(dataInicial), DateUtils.toDate(dataFinal), siglasStatusOcorrencia);
+	}
+
 	@Path("/consultarStatusOcorrencia")
 	@GET
 	public List<Ocorrencia> consultarStatusOcorrencia(@QueryParam("status") String status) throws NegocioException {
-		StatusOcorrencia statusOcorrencia = StatusOcorrencia.getTipoStatus(status);
+		StatusOcorrencia statusOcorrencia = StatusOcorrencia.getStatusOcorrenciaSigla(status);
 		return getOcorrenciaService().consultarStatusOcorrencia(statusOcorrencia);
 	}
 
 	@Path("/consultarStatusOcorrenciaUsuarioId")
 	public List<Ocorrencia> consultarStatusOcorrenciaUsuarioId(@QueryParam("status") String status,
 			@QueryParam("usuarioId") Long usuarioId) throws NegocioException {
-		StatusOcorrencia statusOcorrencia = StatusOcorrencia.getTipoStatus(status);
+		StatusOcorrencia statusOcorrencia = StatusOcorrencia.getStatusOcorrenciaSigla(status);
 		getOcorrencia().setStatusOcorrencia(statusOcorrencia);
 		getOcorrencia().setId(usuarioId);
 		return getOcorrenciaService().consultarStatusOcorrenciaUsuarioId(getOcorrencia());
