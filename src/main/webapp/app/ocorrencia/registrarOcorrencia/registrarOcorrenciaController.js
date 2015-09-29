@@ -39,18 +39,22 @@
 		}
 		
 		function registrarOcorrencia(){
-			vm.ocorrencia.dataRegistro = vm.calendario.data;
-			var usuario = usuarioObject.recuperar();
-			vm.ocorrencia.idUsuario = usuario.id;
-			ocorrenciaService.registrarOcorrencia(vm.ocorrencia).then(
-				function(response){
-					$log.log(response);
-				},
-				function(response){
-					$log.log(response);
-				}
-			)
-			console.log('chamar ocorrenciaService.registrarOcorrencia()');
+			if (form.$valid) {
+				vm.ocorrencia.dataRegistro = vm.calendario.data;
+				var usuario = usuarioObject.recuperar();
+				vm.ocorrencia.idUsuario = usuario.id;
+				ocorrenciaService.registrarOcorrencia(vm.ocorrencia).then(
+						function(response){
+							vm.alerts.push({type : 'info', msg : 'Ocorrência registrada...'});
+							vm.ocorrencia = {};
+						},
+						function(response){
+							angular.forEach(response.data, function(mensagem, key){
+								vm.alerts.push({type : 'danger', msg : mensagem});
+							});
+						}
+				)
+			}
 		}
 		
 		function fecharAlert(index){

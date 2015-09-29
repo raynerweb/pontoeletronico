@@ -16,7 +16,7 @@
 		
 		<alert ng-repeat="alert in vm.alerts" type="{{alert.type}}" close="vm.fecharAlert($index)">{{alert.msg}}</alert>
 		
-		<form class="form-horizontal" ng-init="vm.iniciarCalendario()">
+		<form class="form-horizontal" name="registrarOcorrenciaForm" novalidate>
 			<div class="form-group">
 				<label for="dataRegistro" class="col-sm-2 control-label">Data Registro de ponto</label>
 				<div class="col-sm-2">
@@ -33,12 +33,12 @@
 			<div class="form-group">
 				<label for="justificativa" class="col-sm-2 control-label">Justificativa</label>
 				<div class="col-sm-6">
-					<textarea class="form-control" rows="7" ng-model="vm.ocorrencia.justificativa"></textarea>
+					<textarea class="form-control" rows="7" ng-model="vm.ocorrencia.justificativa" ng-maxlength="255" ng-trim="true" name="justificativa" ng-required="true"></textarea>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-primary" ng-click="vm.registrarOcorrencia()">Resgistrar</button>
+					<input type="submit" class="btn btn-primary" value="Resgistrar" ng-click="vm.registrarOcorrencia()">
 				</div>
 			</div>
 		</form>

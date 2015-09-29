@@ -1,5 +1,6 @@
 package br.com.pontoeletronico.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -22,7 +23,7 @@ public class OcorrenciaService {
 
 	@Autowired
 	private OcorrenciaRepository ocorrenciaRepository;
-	
+
 	@Autowired
 	private PontoService pontoService;
 
@@ -46,31 +47,43 @@ public class OcorrenciaService {
 		return getOcorrenciaRepository().findByUsuarioIdOrderByPontoDataRegistroDesc(usuarioId);
 	}
 
-	public OcorrenciaDTO registrarOcorrencia(OcorrenciaDTO ocorrenciaDto) throws NegocioException {
-		Ponto ponto = pontoService.recuperarPorDataRegistroIdUsuario(ocorrenciaDto.getIdUsuario(), ocorrenciaDto.getDataRegistro());
+	public OcorrenciaDTO registrarOcorrencia(OcorrenciaDTO ocorrenciaDto) {
+		Ponto ponto = pontoService.recuperarPorDataRegistroIdUsuario(ocorrenciaDto.getIdUsuario(),
+				ocorrenciaDto.getDataRegistro());
+		if (ponto == null) {
+			String mensagem = String.format("Não houve ponto registrado em %s",
+					new SimpleDateFormat("dd/MM/yyyy").format(ocorrenciaDto.getDataRegistro()));
+			throw new NegocioException(mensagem);
+		}
 		Ocorrencia ocorrencia = ocorrenciaDto.toOcorrencia();
 		ocorrencia.setPonto(ponto);
 		ocorrencia.setStatusOcorrencia(StatusOcorrencia.ABERTO);
 		return armazenarOcorrencia(ocorrencia);
 	}
-	
-	public OcorrenciaDTO armazenarOcorrencia(Ocorrencia ocorrencia){
-		return new OcorrenciaDTO(getOcorrenciaRepository().save(ocorrencia));
+
+	public OcorrenciaDTO armazenarOcorrencia(Ocorrencia ocorrencia) {
+		try {
+			return new OcorrenciaDTO(getOcorrenciaRepository().save(ocorrencia));
+		} catch (Throwable e) {
+			throw new NegocioException("Erro inexperado. Favor contactar administrador.");
+		}
 	}
 
-	public List<OcorrenciaDTO> recuperaPorIdUsuarioIntervaloDataRegistroStatusOcorrencia(Long idUsuario, Date dataInicial,
-			Date dataFinal, List<String> siglasStatusOcorrencia) {
-		
+	public List<OcorrenciaDTO> recuperaPorIdUsuarioIntervaloDataRegistroStatusOcorrencia(Long idUsuario,
+			Date dataInicial, Date dataFinal, List<String> siglasStatusOcorrencia) {
+
 		List<StatusOcorrencia> statusOcorrencia = converteListaSiglasParaListaStatusOcorrencia(siglasStatusOcorrencia);
 		validaPesquisaOcorrencia(idUsuario, dataInicial, dataFinal);
-		List<Ocorrencia> ocorrencias = ocorrenciaRepository.findByUsuarioIdAndPontoDataRegistroBetweenAndStatusOcorrenciaInOrderByPontoDataRegistroDesc(idUsuario, dataInicial, dataFinal, statusOcorrencia);
+		List<Ocorrencia> ocorrencias = ocorrenciaRepository
+				.findByUsuarioIdAndPontoDataRegistroBetweenAndStatusOcorrenciaInOrderByPontoDataRegistroDesc(idUsuario,
+						dataInicial, dataFinal, statusOcorrencia);
 		List<OcorrenciaDTO> ocorrenciasDTO = new ArrayList<OcorrenciaDTO>();
 		for (Ocorrencia ocorrencia : ocorrencias) {
 			ocorrenciasDTO.add(new OcorrenciaDTO(ocorrencia));
 		}
 		return ocorrenciasDTO;
 	}
-	
+
 	private List<StatusOcorrencia> converteListaSiglasParaListaStatusOcorrencia(List<String> siglasStatusOcorrencia) {
 		List<StatusOcorrencia> status = new ArrayList<StatusOcorrencia>();
 		for (String sigla : siglasStatusOcorrencia) {
@@ -83,8 +96,8 @@ public class OcorrenciaService {
 		}
 		return status;
 	}
-	
-	private void validaPesquisaOcorrencia(Long idUsuario, Date dataInicial, Date dataFinal){
+
+	private void validaPesquisaOcorrencia(Long idUsuario, Date dataInicial, Date dataFinal) {
 		Map<String, String> errors = new HashMap<String, String>();
 		if (idUsuario == null) {
 			errors.put("usuario", "Usuário não informado");
