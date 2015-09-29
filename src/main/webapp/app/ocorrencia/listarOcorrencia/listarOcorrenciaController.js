@@ -26,6 +26,7 @@
 			}
 			iniciarCalendario();
 			recuperarStatusOcorrencia();
+			listarOcorrencias();
 		}
 		
 		function iniciarCalendario(){

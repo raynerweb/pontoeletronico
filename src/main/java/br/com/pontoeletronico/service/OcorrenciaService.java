@@ -50,6 +50,11 @@ public class OcorrenciaService {
 		Ponto ponto = pontoService.recuperarPorDataRegistroIdUsuario(ocorrenciaDto.getIdUsuario(), ocorrenciaDto.getDataRegistro());
 		Ocorrencia ocorrencia = ocorrenciaDto.toOcorrencia();
 		ocorrencia.setPonto(ponto);
+		ocorrencia.setStatusOcorrencia(StatusOcorrencia.ABERTO);
+		return armazenarOcorrencia(ocorrencia);
+	}
+	
+	public OcorrenciaDTO armazenarOcorrencia(Ocorrencia ocorrencia){
 		return new OcorrenciaDTO(getOcorrenciaRepository().save(ocorrencia));
 	}
 

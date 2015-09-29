@@ -80,8 +80,8 @@
 			</thead>
 			<tbody>
 				<tr class="text-center" ng-class="{danger : ocorrencia.rejeitada}" ng-repeat="ocorrencia in vm.ocorrencias" >
-					<td><span popover-placement="right" popover="{{ocorrencia.justificativa}}" popover-trigger="mouseenter">{{ocorrencia.dataRegistro}}</span></td>
-					<td>{{ocorrencia.entradaPrimeiroTurno}}</td>
+					<td><span popover-placement="right" popover="{{ocorrencia.justificativa}}" popover-trigger="mouseenter">{{ocorrencia.dataRegistro | date : 'dd/MM/yyyy'}}</span></td>
+					<td>{{ocorrencia.entradaPrimeiroTurno | date : 'HH:mm:ss'}}</td>
 					<td>{{ocorrencia.saidaPrimeiroTurno}}</td>
 					<td>{{ocorrencia.entradaSegundoTurno}}</td>
 					<td>{{ocorrencia.saidaSegundoTurno}}</td>
