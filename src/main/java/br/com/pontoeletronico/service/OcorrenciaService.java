@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ import br.com.pontoeletronico.repository.OcorrenciaRepository;
 
 @Service
 public class OcorrenciaService {
+	
+	private final Logger log = Logger.getLogger(OcorrenciaService.class);
 
 	@Autowired
 	private OcorrenciaRepository ocorrenciaRepository;
@@ -65,6 +68,7 @@ public class OcorrenciaService {
 		try {
 			return new OcorrenciaDTO(getOcorrenciaRepository().save(ocorrencia));
 		} catch (Throwable e) {
+			log.error(e.getMessage());
 			throw new NegocioException("Erro inexperado. Favor contactar administrador.");
 		}
 	}

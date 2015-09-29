@@ -34,11 +34,15 @@
 				<label for="justificativa" class="col-sm-2 control-label">Justificativa</label>
 				<div class="col-sm-6">
 					<textarea class="form-control" rows="7" ng-model="vm.ocorrencia.justificativa" ng-maxlength="255" ng-trim="true" name="justificativa" ng-required="true"></textarea>
+					<p ng-show="(!registrarOcorrenciaForm.justificativa.$pristine && registrarOcorrenciaForm.justificativa.$error.required  && registrarOcorrenciaForm.submitted)" 
+						class="alert alert-danger">Campo obrigatorio</p>
+					<p ng-show="(!registrarOcorrenciaForm.justificativa.$pristine && registrarOcorrenciaForm.justificativa.$error.maxlength) || (registrarOcorrenciaForm.submitted && registrarOcorrenciaForm.justificativa.$error.maxlength)" 
+						class="alert alert-danger">Permitido apenas 255 caracteres</p>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<input type="submit" class="btn btn-primary" value="Resgistrar" ng-click="vm.registrarOcorrencia()">
+					<input type="submit" class="btn btn-primary" value="Resgistrar" ng-click="vm.registrarOcorrencia(registrarOcorrenciaForm)">
 				</div>
 			</div>
 		</form>

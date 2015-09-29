@@ -38,7 +38,8 @@
 			vm.calendario.isOpen = true;
 		}
 		
-		function registrarOcorrencia(){
+		function registrarOcorrencia(form){
+			form.submitted = true;
 			if (form.$valid) {
 				vm.ocorrencia.dataRegistro = vm.calendario.data;
 				var usuario = usuarioObject.recuperar();
@@ -47,6 +48,7 @@
 						function(response){
 							vm.alerts.push({type : 'info', msg : 'Ocorrência registrada...'});
 							vm.ocorrencia = {};
+							form.submitted = false;
 						},
 						function(response){
 							angular.forEach(response.data, function(mensagem, key){
