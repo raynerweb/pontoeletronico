@@ -2,6 +2,7 @@ package br.com.pontoeletronico.rest;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -31,7 +32,7 @@ public class OcorrenciaRest {
 
 	@Path("/consultar")
 	@GET
-	public Response consultar(@QueryParam("idUsuario") Long idUsuario, @QueryParam("dataInicial") Long dataInicial,
+	public Response consultar(@NotNull(message="{campo.obrigatorio}") @QueryParam("idUsuario") Long idUsuario, @QueryParam("dataInicial") Long dataInicial,
 			@QueryParam("dataFinal") Long dataFinal, @QueryParam("status") List<String> siglasStatusOcorrencia) {
 		return Response.ok(ocorrenciaService.recuperaPorIdUsuarioIntervaloDataRegistroStatusOcorrencia(idUsuario,
 				DateUtils.toDate(dataInicial), DateUtils.toDate(dataFinal), siglasStatusOcorrencia)).build();
