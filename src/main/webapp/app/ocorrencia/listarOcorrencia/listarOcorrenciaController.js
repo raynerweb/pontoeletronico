@@ -80,7 +80,10 @@
 			consulta.status = status;
 			consulta.dataInicial = vm.calendarioInicial.data.getTime();
 			consulta.dataFinal = vm.calendarioFinal.data.getTime();
-			consulta.idUsuario = 1;
+			var usuario = usuarioObject.recuperar();
+			if (objectUtils.isEmpty(usuario)){
+				consulta.idUsuario = usuario.id;
+			}
 			
 			vm.ocorrencias = [];
 			ocorrenciaService.consultar(consulta).then(function(response){
